@@ -4,6 +4,7 @@ import java.security.interfaces.RSAPrivateKey;
 
 import org.bitcoinj.core.ECKey;
 
+import com.danubetech.keytypes.JWKKeyTypes;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.crypto.impl.RSAKeyUtils;
 import com.nimbusds.jose.jwk.Curve;
@@ -12,6 +13,22 @@ import com.nimbusds.jose.jwk.KeyType;
 import com.nimbusds.jose.jwk.RSAKey;
 
 public class JWKToPrivateKey {
+
+	public static Object JWKToAnyPrivateKey(JWK jsonWebKey) throws JOSEException {
+
+		String keyType = JWKKeyTypes.keyTypeForJWK(jsonWebKey);
+
+		if (KeyType.RSA.equals(keyType))
+			return JWKToRSAPrivateKey(jsonWebKey);
+		else if (Curve.P_256K.equals(keyType))
+			return JWKToP_256KPrivateKey(jsonWebKey);
+		else if (Curve.Ed25519.equals(keyType))
+			return JWKToEd25519PrivateKeyBytes(jsonWebKey);
+		else if (Curve.X25519.equals(keyType))
+			return JWKToX25519PrivateKeyBytes(jsonWebKey);
+		else
+			throw new IllegalArgumentException("Unsupported key.");
+	}
 
 	public static RSAPrivateKey JWKToRSAPrivateKey(JWK jsonWebKey) throws JOSEException {
 
