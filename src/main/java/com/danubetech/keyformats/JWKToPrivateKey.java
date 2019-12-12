@@ -18,21 +18,21 @@ public class JWKToPrivateKey {
 
 		String keyType = JWKKeyTypes.keyTypeForJWK(jsonWebKey);
 
-		if (KeyType.RSA.equals(keyType))
+		if (KeyType.RSA.getValue().equals(keyType))
 			return JWKToRSAPrivateKey(jsonWebKey);
-		else if (Curve.P_256K.equals(keyType))
+		else if (Curve.P_256K.getName().equals(keyType))
 			return JWKToP_256KPrivateKey(jsonWebKey);
-		else if (Curve.Ed25519.equals(keyType))
+		else if (Curve.Ed25519.getName().equals(keyType))
 			return JWKToEd25519PrivateKeyBytes(jsonWebKey);
-		else if (Curve.X25519.equals(keyType))
+		else if (Curve.X25519.getName().equals(keyType))
 			return JWKToX25519PrivateKeyBytes(jsonWebKey);
 		else
-			throw new IllegalArgumentException("Unsupported key.");
+			throw new IllegalArgumentException("Unsupported key type: " + keyType);
 	}
 
 	public static RSAPrivateKey JWKToRSAPrivateKey(JWK jsonWebKey) throws JOSEException {
 
-		if (! KeyType.RSA.equals(jsonWebKey.getKeyType())) throw new IllegalArgumentException("Incorrect key type.");
+		if (! KeyType.RSA.equals(jsonWebKey.getKeyType())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKeyType());
 
 		return (RSAPrivateKey) RSAKeyUtils.toRSAPrivateKey((RSAKey) jsonWebKey);
 	}
@@ -46,20 +46,20 @@ public class JWKToPrivateKey {
 
 	public static byte[] JWKToP_256KPrivateKeyBytes(JWK jsonWebKey) throws JOSEException {
 
-		if (! KeyType.EC.equals(jsonWebKey.getKeyType())) throw new IllegalArgumentException("Incorrect key type.");
+		if (! KeyType.EC.equals(jsonWebKey.getKeyType())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKeyType());
 
 		com.nimbusds.jose.jwk.ECKey ecKey = (com.nimbusds.jose.jwk.ECKey) jsonWebKey;
-		if (! Curve.P_256K.equals(ecKey.getCurve())) throw new IllegalArgumentException("Incorrect curve.");
+		if (! Curve.P_256K.equals(ecKey.getCurve())) throw new IllegalArgumentException("Incorrect curve: " + ecKey.getCurve());
 
 		return ecKey.getD().decode();
 	}
 
 	public static byte[] JWKToEd25519PrivateKeyBytes(JWK jsonWebKey) {
 
-		if (! KeyType.OKP.equals(jsonWebKey.getKeyType())) throw new IllegalArgumentException("Incorrect key type.");
+		if (! KeyType.OKP.equals(jsonWebKey.getKeyType())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKeyType());
 
 		com.nimbusds.jose.jwk.OctetKeyPair octetKeyPair = (com.nimbusds.jose.jwk.OctetKeyPair) jsonWebKey;
-		if (! Curve.Ed25519.equals(octetKeyPair.getCurve())) throw new IllegalArgumentException("Incorrect curve.");
+		if (! Curve.Ed25519.equals(octetKeyPair.getCurve())) throw new IllegalArgumentException("Incorrect curve: " + octetKeyPair.getCurve());
 
 		byte[] privateKeyBytes = octetKeyPair.getD().decode();
 
@@ -68,10 +68,10 @@ public class JWKToPrivateKey {
 
 	public static byte[] JWKToX25519PrivateKeyBytes(JWK jsonWebKey) {
 
-		if (! KeyType.OKP.equals(jsonWebKey.getKeyType())) throw new IllegalArgumentException("Incorrect key type.");
+		if (! KeyType.OKP.equals(jsonWebKey.getKeyType())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKeyType());
 
 		com.nimbusds.jose.jwk.OctetKeyPair octetKeyPair = (com.nimbusds.jose.jwk.OctetKeyPair) jsonWebKey;
-		if (! Curve.X25519.equals(octetKeyPair.getCurve())) throw new IllegalArgumentException("Incorrect curve.");
+		if (! Curve.X25519.equals(octetKeyPair.getCurve())) throw new IllegalArgumentException("Incorrect curve: " + octetKeyPair.getCurve());
 
 		byte[] privateKeyBytes = octetKeyPair.getD().decode();
 

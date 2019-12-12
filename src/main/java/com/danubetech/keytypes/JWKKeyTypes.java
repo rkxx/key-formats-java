@@ -9,13 +9,13 @@ public class JWKKeyTypes {
 
 	public static String keyTypeForJWK(JWK jsonWebKey) {
 
-		if (KeyType.EC.equals(jsonWebKey.getKeyType()))
+		if (KeyType.RSA.equals(jsonWebKey.getKeyType()))
+			return jsonWebKey.getKeyType().getValue();
+		else if (KeyType.EC.equals(jsonWebKey.getKeyType()))
 			return ((ECKey) jsonWebKey).getCurve().getName();
 		else if (KeyType.OKP.equals(jsonWebKey.getKeyType()))
 			return ((OctetKeyPair) jsonWebKey).getCurve().getName();
-		else if (KeyType.RSA.equals(jsonWebKey.getKeyType()))
-			return jsonWebKey.getKeyType().getValue();
 		else
-			throw new IllegalArgumentException("Unsupported key type.");
+			throw new IllegalArgumentException("Unsupported key type " + jsonWebKey.getKeyType());
 	}
 }
