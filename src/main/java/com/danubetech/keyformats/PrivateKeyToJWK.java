@@ -2,6 +2,7 @@ package com.danubetech.keyformats;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Arrays;
 
 import org.bitcoinj.core.ECKey;
 import org.bouncycastle.math.ec.ECPoint;
@@ -49,8 +50,9 @@ public class PrivateKeyToJWK {
 
 	public static com.nimbusds.jose.jwk.OctetKeyPair Ed25519PrivateKeyBytesToJWK(byte[] privateKeyBytes, byte[] publicKeyBytes, String kid, String use) {
 
+		byte[] onlyPrivateKeyBytes = Arrays.copyOf(privateKeyBytes, 32);
 		Base64URL xParameter = Base64URL.encode(publicKeyBytes);
-		Base64URL dParameter = Base64URL.encode(privateKeyBytes);
+		Base64URL dParameter = Base64URL.encode(onlyPrivateKeyBytes);
 
 		com.nimbusds.jose.jwk.OctetKeyPair jsonWebKey = new com.nimbusds.jose.jwk.OctetKeyPair.Builder(Curve.Ed25519, xParameter)
 				.d(dParameter)
@@ -63,8 +65,9 @@ public class PrivateKeyToJWK {
 
 	public static com.nimbusds.jose.jwk.OctetKeyPair X25519PrivateKeyBytesToJWK(byte[] privateKeyBytes, byte[] publicKeyBytes, String kid, String use) {
 
+		byte[] onlyPrivateKeyBytes = Arrays.copyOf(privateKeyBytes, 32);
 		Base64URL xParameter = Base64URL.encode(publicKeyBytes);
-		Base64URL dParameter = Base64URL.encode(privateKeyBytes);
+		Base64URL dParameter = Base64URL.encode(onlyPrivateKeyBytes);
 
 		com.nimbusds.jose.jwk.OctetKeyPair jsonWebKey = new com.nimbusds.jose.jwk.OctetKeyPair.Builder(Curve.X25519, xParameter)
 				.d(dParameter)
