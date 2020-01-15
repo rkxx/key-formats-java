@@ -61,7 +61,9 @@ public class JWKToPrivateKey {
 		com.nimbusds.jose.jwk.OctetKeyPair octetKeyPair = (com.nimbusds.jose.jwk.OctetKeyPair) jsonWebKey;
 		if (! Curve.Ed25519.equals(octetKeyPair.getCurve())) throw new IllegalArgumentException("Incorrect curve: " + octetKeyPair.getCurve());
 
-		byte[] privateKeyBytes = octetKeyPair.getD().decode();
+		byte[] privateKeyBytes = new byte[64];
+		System.arraycopy(octetKeyPair.getD().decode(), 0, privateKeyBytes, 0, 32);
+		System.arraycopy(octetKeyPair.getX().decode(), 0, privateKeyBytes, 32, 32);
 
 		return privateKeyBytes;
 	}
@@ -73,7 +75,9 @@ public class JWKToPrivateKey {
 		com.nimbusds.jose.jwk.OctetKeyPair octetKeyPair = (com.nimbusds.jose.jwk.OctetKeyPair) jsonWebKey;
 		if (! Curve.X25519.equals(octetKeyPair.getCurve())) throw new IllegalArgumentException("Incorrect curve: " + octetKeyPair.getCurve());
 
-		byte[] privateKeyBytes = octetKeyPair.getD().decode();
+		byte[] privateKeyBytes = new byte[64];
+		System.arraycopy(octetKeyPair.getD().decode(), 0, privateKeyBytes, 0, 32);
+		System.arraycopy(octetKeyPair.getX().decode(), 0, privateKeyBytes, 32, 32);
 
 		return privateKeyBytes;
 	}
