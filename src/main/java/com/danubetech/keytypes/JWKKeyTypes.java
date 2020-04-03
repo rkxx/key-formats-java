@@ -7,7 +7,7 @@ import com.nimbusds.jose.jwk.OctetKeyPair;
 
 public class JWKKeyTypes {
 
-	public static String keyTypeForJWK(JWK jsonWebKey) {
+	public static String keyType_for_JWK(JWK jsonWebKey) {
 
 		if (KeyType.RSA.equals(jsonWebKey.getKeyType()))
 			return jsonWebKey.getKeyType().getValue();
