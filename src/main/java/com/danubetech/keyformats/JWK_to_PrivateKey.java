@@ -4,7 +4,7 @@ import java.security.interfaces.RSAPrivateKey;
 
 import org.bitcoinj.core.ECKey;
 
-import com.danubetech.keytypes.JWKKeyTypes;
+import com.danubetech.keyformats.keytypes.KeyType_for_JWK;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.crypto.impl.RSAKeyUtils;
 import com.nimbusds.jose.jwk.Curve;
@@ -16,7 +16,7 @@ public class JWK_to_PrivateKey {
 
 	public static Object JWK_to_anyPrivateKey(JWK jsonWebKey) throws JOSEException {
 
-		String keyType = JWKKeyTypes.keyType_for_JWK(jsonWebKey);
+		String keyType = KeyType_for_JWK.keyType_for_JWK(jsonWebKey);
 
 		if (KeyType.RSA.getValue().equals(keyType))
 			return JWK_to_RSAPrivateKey(jsonWebKey);
