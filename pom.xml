@@ -13,6 +13,21 @@
 		<system>GitHub Issues</system>
 	</issueManagement>
 
+	<distributionManagement>
+		<snapshotRepository>
+			<id>danubetech-maven-snapshots</id>
+			<url>
+				https://repo.danubetech.com/repository/maven-snapshots/
+			</url>
+		</snapshotRepository>
+		<repository>
+			<id>danubetech-maven-releases</id>
+			<url>
+				https://repo.danubetech.com/repository/maven-releases/
+			</url>
+		</repository>
+	</distributionManagement>
+
 	<scm>
 		<url>https://github.com/danubetech/key-formats-java</url>
 		<connection>scm:git:git://github.com/danubetech/key-formats-java.git</connection>
