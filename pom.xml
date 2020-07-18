@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
@@ -8,6 +9,12 @@
 	<version>0.2-SNAPSHOT</version>
 	<name>key-formats-java</name>
 
+	<scm>
+		<url>https://github.com/danubetech/key-formats-java</url>
+		<connection>scm:git:git://github.com/danubetech/key-formats-java.git</connection>
+		<developerConnection>scm:git:git@danubetech/key-formats-java.git</developerConnection>
+	</scm>
+
 	<issueManagement>
 		<url>https://github.com/danubetech/key-formats-java/issues</url>
 		<system>GitHub Issues</system>
@@ -16,23 +23,13 @@
 	<distributionManagement>
 		<snapshotRepository>
 			<id>danubetech-maven-snapshots</id>
-			<url>
-				https://repo.danubetech.com/repository/maven-snapshots/
-			</url>
+			<url>https://repo.danubetech.com/repository/maven-snapshots/</url>
 		</snapshotRepository>
 		<repository>
 			<id>danubetech-maven-releases</id>
-			<url>
-				https://repo.danubetech.com/repository/maven-releases/
-			</url>
+			<url>https://repo.danubetech.com/repository/maven-releases/</url>
 		</repository>
 	</distributionManagement>
-
-	<scm>
-		<url>https://github.com/danubetech/key-formats-java</url>
-		<connection>scm:git:git://github.com/danubetech/key-formats-java.git</connection>
-		<developerConnection>scm:git:git@danubetech/key-formats-java.git</developerConnection>
-	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
