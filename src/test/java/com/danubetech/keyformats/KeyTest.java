@@ -1,8 +1,11 @@
 package com.danubetech.keyformats;
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class KeyTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+public class KeyTest {
+
+	@Test
 	public void testKey() throws Exception {
 
 		assertTrue(true);
