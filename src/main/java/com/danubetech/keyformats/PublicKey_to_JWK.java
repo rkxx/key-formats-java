@@ -2,7 +2,7 @@ package com.danubetech.keyformats;
 
 import java.security.interfaces.RSAPublicKey;
 
-import com.danubetech.keyformats.curves.Curves;
+import com.danubetech.keyformats.jose.Curves;
 import org.bitcoinj.core.ECKey;
 import org.bouncycastle.math.ec.ECPoint;
 

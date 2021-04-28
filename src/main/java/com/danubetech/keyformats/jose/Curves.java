@@ -1,4 +1,4 @@
-package com.danubetech.keyformats.curves;
+package com.danubetech.keyformats.jose;
 
 import com.nimbusds.jose.jwk.Curve;
 

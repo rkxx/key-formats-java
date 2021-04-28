@@ -4,7 +4,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
 
-import com.danubetech.keyformats.curves.Curves;
+import com.danubetech.keyformats.jose.Curves;
 import org.bitcoinj.core.ECKey;
 import org.bouncycastle.math.ec.ECPoint;
 
