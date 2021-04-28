@@ -19,4 +19,4 @@ Dependency:
 
 ## About
 
-Markus Sabadello, Danube Tech - https://danubetech.com/
+Danube Tech - https://danubetech.com/
