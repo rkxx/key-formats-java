@@ -1,18 +1,15 @@
 package com.danubetech.keyformats.jose;
 
-import com.nimbusds.jose.jwk.Curve;
-import com.nimbusds.jose.jwk.KeyType;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public enum KeyTypeName {
-    RSA(KeyType.RSA.getValue()),
-    secp256k1(Curve.SECP256K1.getName()),
-    BLS12381_G1(Curves.BLS12381_G1.getName()),
-    BLS12381_G2(Curves.BLS12381_G2.getName()),
-    Ed25519(Curve.Ed25519.getName()),
-    X25519(Curve.X25519.getName());
+    RSA(KeyType.RSA),
+    secp256k1(Curve.secp256k1),
+    BLS12381_G1(Curve.BLS12381_G1),
+    BLS12381_G2(Curve.BLS12381_G2),
+    Ed25519(Curve.Ed25519),
+    X25519(Curve.X25519);
 
     private static final Map<String, KeyTypeName> KEY_TYPE_NAME_MAP = new HashMap<>();
 

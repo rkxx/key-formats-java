@@ -1,7 +1,7 @@
 package com.danubetech.keyformats.crypto.impl;
 
-import com.nimbusds.jose.JWSAlgorithm;
 import com.danubetech.keyformats.crypto.PrivateKeySigner;
+import com.danubetech.keyformats.jose.JWSAlgorithm;
 
 import java.security.GeneralSecurityException;
 import java.security.Signature;
@@ -11,22 +11,22 @@ import java.security.spec.PSSParameterSpec;
 
 public class RSA_PS256_PrivateKeySigner extends PrivateKeySigner<RSAPrivateKey> {
 
-	public RSA_PS256_PrivateKeySigner(RSAPrivateKey privateKey) {
+    public RSA_PS256_PrivateKeySigner(RSAPrivateKey privateKey) {
 
-		super(privateKey, JWSAlgorithm.PS256.getName());
-	}
+        super(privateKey, JWSAlgorithm.PS256);
+    }
 
-	@Override
-	public byte[] sign(byte[] content) throws GeneralSecurityException {
+    @Override
+    public byte[] sign(byte[] content) throws GeneralSecurityException {
 
-		PSSParameterSpec pssParameterSpec = new PSSParameterSpec("SHA256", "MGF1", MGF1ParameterSpec.SHA256, 32, 1);
+        PSSParameterSpec pssParameterSpec = new PSSParameterSpec("SHA256", "MGF1", MGF1ParameterSpec.SHA256, 32, 1);
 
-		Signature jcaSignature = Signature.getInstance("SHA256withRSAandMGF1");
-		jcaSignature.setParameter(pssParameterSpec);
+        Signature jcaSignature = Signature.getInstance("SHA256withRSAandMGF1");
+        jcaSignature.setParameter(pssParameterSpec);
 
-		jcaSignature.initSign(this.getPrivateKey());
-		jcaSignature.update(content);
+        jcaSignature.initSign(this.getPrivateKey());
+        jcaSignature.update(content);
 
-		return jcaSignature.sign();
-	}
+        return jcaSignature.sign();
+    }
 }

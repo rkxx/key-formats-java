@@ -2,9 +2,8 @@ package com.danubetech.keyformats.crypto.impl;
 
 import bbs.signatures.Bbs;
 import bbs.signatures.KeyPair;
-import com.danubetech.keyformats.jose.JWSAlgorithms;
 import com.danubetech.keyformats.crypto.PrivateKeySigner;
-import org.bitcoinj.core.ECKey;
+import com.danubetech.keyformats.jose.JWSAlgorithm;
 
 import java.security.GeneralSecurityException;
 
@@ -12,7 +11,7 @@ public class BLS12381_G2_BBSPlus_PrivateKeySigner extends PrivateKeySigner<KeyPa
 
     public BLS12381_G2_BBSPlus_PrivateKeySigner(KeyPair privateKey) {
 
-        super(privateKey, JWSAlgorithms.BBSPlus.getName());
+        super(privateKey, JWSAlgorithm.BBSPlus);
     }
 
     @Override
