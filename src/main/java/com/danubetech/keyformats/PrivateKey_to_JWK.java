@@ -4,6 +4,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
 
+import com.danubetech.keyformats.curves.Curves;
 import org.bitcoinj.core.ECKey;
 import org.bouncycastle.math.ec.ECPoint;
 
@@ -42,6 +43,54 @@ public class PrivateKey_to_JWK {
 	}
 
 	public static com.nimbusds.jose.jwk.ECKey secp256k1PrivateKeyBytes_to_JWK(byte[] privateKeyBytes, String kid, String use) {
+
+		ECKey privateKey = ECKey.fromPrivate(privateKeyBytes);
+
+		return secp256k1PrivateKey_to_JWK(privateKey, kid, use);
+	}
+
+	public static com.nimbusds.jose.jwk.ECKey BLS12381_G1PrivateKey_to_JWK(ECKey privateKey, String kid, String use) {
+
+		ECPoint publicKeyPoint = privateKey.getPubKeyPoint();
+		byte[] privateKeyBytes = privateKey.getPrivKeyBytes();
+		Base64URL xParameter = Base64URL.encode(publicKeyPoint.getAffineXCoord().getEncoded());
+		Base64URL yParameter = Base64URL.encode(publicKeyPoint.getAffineYCoord().getEncoded());
+		Base64URL dParameter = Base64URL.encode(privateKeyBytes);
+
+		com.nimbusds.jose.jwk.ECKey jsonWebKey = new com.nimbusds.jose.jwk.ECKey.Builder(Curves.BLS12381_G1, xParameter, yParameter)
+				.d(dParameter)
+				.keyID(kid)
+				.keyUse(use == null ? null : new KeyUse(use))
+				.build();
+
+		return jsonWebKey;
+	}
+
+	public static com.nimbusds.jose.jwk.ECKey BLS12381_G1PrivateKeyBytes_to_JWK(byte[] privateKeyBytes, String kid, String use) {
+
+		ECKey privateKey = ECKey.fromPrivate(privateKeyBytes);
+
+		return secp256k1PrivateKey_to_JWK(privateKey, kid, use);
+	}
+
+	public static com.nimbusds.jose.jwk.ECKey BLS12381_G2PrivateKey_to_JWK(ECKey privateKey, String kid, String use) {
+
+		ECPoint publicKeyPoint = privateKey.getPubKeyPoint();
+		byte[] privateKeyBytes = privateKey.getPrivKeyBytes();
+		Base64URL xParameter = Base64URL.encode(publicKeyPoint.getAffineXCoord().getEncoded());
+		Base64URL yParameter = Base64URL.encode(publicKeyPoint.getAffineYCoord().getEncoded());
+		Base64URL dParameter = Base64URL.encode(privateKeyBytes);
+
+		com.nimbusds.jose.jwk.ECKey jsonWebKey = new com.nimbusds.jose.jwk.ECKey.Builder(Curves.BLS12381_G2, xParameter, yParameter)
+				.d(dParameter)
+				.keyID(kid)
+				.keyUse(use == null ? null : new KeyUse(use))
+				.build();
+
+		return jsonWebKey;
+	}
+
+	public static com.nimbusds.jose.jwk.ECKey BLS12381_G2PrivateKeyBytes_to_JWK(byte[] privateKeyBytes, String kid, String use) {
 
 		ECKey privateKey = ECKey.fromPrivate(privateKeyBytes);
 

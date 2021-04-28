@@ -2,6 +2,7 @@ package com.danubetech.keyformats;
 
 import java.security.interfaces.RSAPublicKey;
 
+import com.danubetech.keyformats.curves.Curves;
 import org.bitcoinj.core.ECKey;
 import org.bouncycastle.math.ec.ECPoint;
 
@@ -41,6 +42,48 @@ public class PublicKey_to_JWK {
 		ECKey publicKey = ECKey.fromPublicOnly(publicKeyBytes);
 
 		return secp256k1PublicKey_to_JWK(publicKey, kid, use);
+	}
+
+	public static JWK BLS12381_G1PublicKey_to_JWK(ECKey publicKey, String kid, String use) {
+
+		ECPoint publicKeyPoint = publicKey.getPubKeyPoint();
+		Base64URL xParameter = Base64URL.encode(publicKeyPoint.getAffineXCoord().getEncoded());
+		Base64URL yParameter = Base64URL.encode(publicKeyPoint.getAffineYCoord().getEncoded());
+
+		JWK jsonWebKey = new com.nimbusds.jose.jwk.ECKey.Builder(Curves.BLS12381_G1, xParameter, yParameter)
+				.keyID(kid)
+				.keyUse(use == null ? null : new KeyUse(use))
+				.build();
+
+		return jsonWebKey;
+	}
+
+	public static JWK BLS12381_G1PublicKeyBytes_to_JWK(byte[] publicKeyBytes, String kid, String use) {
+
+		ECKey publicKey = ECKey.fromPublicOnly(publicKeyBytes);
+
+		return BLS12381_G1PublicKey_to_JWK(publicKey, kid, use);
+	}
+
+	public static JWK BLS12381_G2PublicKey_to_JWK(ECKey publicKey, String kid, String use) {
+
+		ECPoint publicKeyPoint = publicKey.getPubKeyPoint();
+		Base64URL xParameter = Base64URL.encode(publicKeyPoint.getAffineXCoord().getEncoded());
+		Base64URL yParameter = Base64URL.encode(publicKeyPoint.getAffineYCoord().getEncoded());
+
+		JWK jsonWebKey = new com.nimbusds.jose.jwk.ECKey.Builder(Curves.BLS12381_G2, xParameter, yParameter)
+				.keyID(kid)
+				.keyUse(use == null ? null : new KeyUse(use))
+				.build();
+
+		return jsonWebKey;
+	}
+
+	public static JWK BLS12381_G2PublicKeyBytes_to_JWK(byte[] publicKeyBytes, String kid, String use) {
+
+		ECKey publicKey = ECKey.fromPublicOnly(publicKeyBytes);
+
+		return BLS12381_G2PublicKey_to_JWK(publicKey, kid, use);
 	}
 
 	public static JWK Ed25519PublicKeyBytes_to_JWK(byte[] publicKeyBytes, String kid, String use) {
