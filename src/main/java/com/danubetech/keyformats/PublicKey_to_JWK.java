@@ -2,37 +2,43 @@ package com.danubetech.keyformats;
 
 import java.security.interfaces.RSAPublicKey;
 
-import com.danubetech.keyformats.jose.Curves;
+import bbs.signatures.KeyPair;
+import com.danubetech.keyformats.jose.Curve;
+import com.danubetech.keyformats.jose.JWK;
+import com.danubetech.keyformats.jose.KeyType;
+import org.apache.commons.codec.binary.Base64;
 import org.bitcoinj.core.ECKey;
 import org.bouncycastle.math.ec.ECPoint;
-
-import com.nimbusds.jose.jwk.Curve;
-import com.nimbusds.jose.jwk.JWK;
-import com.nimbusds.jose.jwk.KeyUse;
-import com.nimbusds.jose.util.Base64URL;
 
 public class PublicKey_to_JWK {
 
 	public static JWK RSAPublicKey_to_JWK(RSAPublicKey publicKey, String kid, String use) {
+
+		throw new RuntimeException("Not supported");
+
+/*		JWK jsonWebKey = new JWK();
+		jsonWebKey.setKid(kid);
+		jsonWebKey.setUse(use);
 
 		JWK jsonWebKey = new com.nimbusds.jose.jwk.RSAKey.Builder(publicKey)
 				.keyID(kid)
 				.keyUse(use == null ? null : new KeyUse(use))
 				.build();
 
-		return jsonWebKey;
+		return jsonWebKey;*/
 	}
 
 	public static JWK secp256k1PublicKey_to_JWK(ECKey publicKey, String kid, String use) {
 
 		ECPoint publicKeyPoint = publicKey.getPubKeyPoint();
-		Base64URL xParameter = Base64URL.encode(publicKeyPoint.getAffineXCoord().getEncoded());
-		Base64URL yParameter = Base64URL.encode(publicKeyPoint.getAffineYCoord().getEncoded());
 
-		JWK jsonWebKey = new com.nimbusds.jose.jwk.ECKey.Builder(Curve.SECP256K1, xParameter, yParameter)
-				.keyID(kid)
-				.keyUse(use == null ? null : new KeyUse(use))
-				.build();
+		JWK jsonWebKey = new JWK();
+		jsonWebKey.setKty(KeyType.EC);
+		jsonWebKey.setCrv(Curve.secp256k1);
+		jsonWebKey.setKid(kid);
+		jsonWebKey.setUse(use);
+		jsonWebKey.setX(Base64.encodeBase64URLSafeString(publicKeyPoint.getAffineXCoord().getEncoded()));
+		jsonWebKey.setY(Base64.encodeBase64URLSafeString(publicKeyPoint.getAffineYCoord().getEncoded()));
 
 		return jsonWebKey;
 	}
@@ -44,68 +50,68 @@ public class PublicKey_to_JWK {
 		return secp256k1PublicKey_to_JWK(publicKey, kid, use);
 	}
 
-	public static JWK BLS12381_G1PublicKey_to_JWK(ECKey publicKey, String kid, String use) {
+	public static JWK BLS12381_G1PublicKey_to_JWK(KeyPair publicKey, String kid, String use) {
 
-		ECPoint publicKeyPoint = publicKey.getPubKeyPoint();
-		Base64URL xParameter = Base64URL.encode(publicKeyPoint.getAffineXCoord().getEncoded());
-		Base64URL yParameter = Base64URL.encode(publicKeyPoint.getAffineYCoord().getEncoded());
+		byte[] publicKeyBytes = publicKey.publicKey;
 
-		JWK jsonWebKey = new com.nimbusds.jose.jwk.ECKey.Builder(Curves.BLS12381_G1, xParameter, yParameter)
-				.keyID(kid)
-				.keyUse(use == null ? null : new KeyUse(use))
-				.build();
+		JWK jsonWebKey = new JWK();
+		jsonWebKey.setKty(KeyType.EC);
+		jsonWebKey.setCrv(Curve.BLS12381_G1);
+		jsonWebKey.setKid(kid);
+		jsonWebKey.setUse(use);
+		jsonWebKey.setX(Base64.encodeBase64URLSafeString(publicKeyBytes));
 
 		return jsonWebKey;
 	}
 
 	public static JWK BLS12381_G1PublicKeyBytes_to_JWK(byte[] publicKeyBytes, String kid, String use) {
 
-		ECKey publicKey = ECKey.fromPublicOnly(publicKeyBytes);
+		KeyPair publicKey = new KeyPair(publicKeyBytes, null);
 
 		return BLS12381_G1PublicKey_to_JWK(publicKey, kid, use);
 	}
 
-	public static JWK BLS12381_G2PublicKey_to_JWK(ECKey publicKey, String kid, String use) {
+	public static JWK BLS12381_G2PublicKey_to_JWK(KeyPair publicKey, String kid, String use) {
 
-		ECPoint publicKeyPoint = publicKey.getPubKeyPoint();
-		Base64URL xParameter = Base64URL.encode(publicKeyPoint.getAffineXCoord().getEncoded());
-		Base64URL yParameter = Base64URL.encode(publicKeyPoint.getAffineYCoord().getEncoded());
+		byte[] publicKeyBytes = publicKey.publicKey;
 
-		JWK jsonWebKey = new com.nimbusds.jose.jwk.ECKey.Builder(Curves.BLS12381_G2, xParameter, yParameter)
-				.keyID(kid)
-				.keyUse(use == null ? null : new KeyUse(use))
-				.build();
+		JWK jsonWebKey = new JWK();
+		jsonWebKey.setKty(KeyType.EC);
+		jsonWebKey.setCrv(Curve.BLS12381_G2);
+		jsonWebKey.setKid(kid);
+		jsonWebKey.setUse(use);
+		jsonWebKey.setX(Base64.encodeBase64URLSafeString(publicKeyBytes));
 
 		return jsonWebKey;
 	}
 
 	public static JWK BLS12381_G2PublicKeyBytes_to_JWK(byte[] publicKeyBytes, String kid, String use) {
 
-		ECKey publicKey = ECKey.fromPublicOnly(publicKeyBytes);
+		KeyPair publicKey = new KeyPair(publicKeyBytes, null);
 
 		return BLS12381_G2PublicKey_to_JWK(publicKey, kid, use);
 	}
 
 	public static JWK Ed25519PublicKeyBytes_to_JWK(byte[] publicKeyBytes, String kid, String use) {
 
-		Base64URL xParameter = Base64URL.encode(publicKeyBytes);
-
-		JWK jsonWebKey = new com.nimbusds.jose.jwk.OctetKeyPair.Builder(Curve.Ed25519, xParameter)
-				.keyID(kid)
-				.keyUse(use == null ? null : new KeyUse(use))
-				.build();
+		JWK jsonWebKey = new JWK();
+		jsonWebKey.setKty(KeyType.OKP);
+		jsonWebKey.setCrv(Curve.Ed25519);
+		jsonWebKey.setKid(kid);
+		jsonWebKey.setUse(use);
+		jsonWebKey.setX(Base64.encodeBase64URLSafeString(publicKeyBytes));
 
 		return jsonWebKey;
 	}
 
 	public static JWK X25519PublicKeyBytes_to_JWK(byte[] publicKeyBytes, String kid, String use) {
 
-		Base64URL xParameter = Base64URL.encode(publicKeyBytes);
-
-		JWK jsonWebKey = new com.nimbusds.jose.jwk.OctetKeyPair.Builder(Curve.X25519, xParameter)
-				.keyID(kid)
-				.keyUse(use == null ? null : new KeyUse(use))
-				.build();
+		JWK jsonWebKey = new JWK();
+		jsonWebKey.setKty(KeyType.OKP);
+		jsonWebKey.setCrv(Curve.X25519);
+		jsonWebKey.setKid(kid);
+		jsonWebKey.setUse(use);
+		jsonWebKey.setX(Base64.encodeBase64URLSafeString(publicKeyBytes));
 
 		return jsonWebKey;
 	}

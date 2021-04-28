@@ -1,7 +1,7 @@
 package com.danubetech.keyformats.crypto.impl;
 
-import com.nimbusds.jose.JWSAlgorithm;
 import com.danubetech.keyformats.crypto.ByteSigner;
+import com.danubetech.keyformats.jose.JWSAlgorithm;
 import org.hyperledger.indy.sdk.IndyException;
 import org.hyperledger.indy.sdk.crypto.Crypto;
 import org.hyperledger.indy.sdk.wallet.Wallet;
@@ -16,7 +16,7 @@ public class Ed25519_EdDSA_LibIndySigner extends ByteSigner {
 
     public Ed25519_EdDSA_LibIndySigner(byte[] privateKey, Wallet wallet, String signerVk) {
 
-        super(JWSAlgorithm.EdDSA.getName());
+        super(JWSAlgorithm.EdDSA);
 
         this.wallet = wallet;
         this.signerVk = signerVk;
