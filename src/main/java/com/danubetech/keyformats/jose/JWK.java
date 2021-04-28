@@ -1,6 +1,9 @@
 package com.danubetech.keyformats.jose;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.binary.Base64;
+
+import java.util.Map;
 
 public class JWK {
     private String kid;
@@ -12,6 +15,12 @@ public class JWK {
     private String d;
 
     public JWK() {
+    }
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    public static JWK parse(Map<String, Object> json) {
+        return objectMapper.convertValue(json, JWK.class);
     }
 
     public String getKid() {
