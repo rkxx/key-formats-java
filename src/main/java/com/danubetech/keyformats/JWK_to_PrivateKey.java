@@ -2,6 +2,7 @@ package com.danubetech.keyformats;
 
 import java.security.interfaces.RSAPrivateKey;
 
+import bbs.signatures.KeyPair;
 import com.danubetech.keyformats.jose.Curves;
 import com.danubetech.keyformats.jose.KeyTypeName;
 import org.bitcoinj.core.ECKey;
@@ -40,7 +41,7 @@ public class JWK_to_PrivateKey {
 
 		if (! KeyType.RSA.equals(jsonWebKey.getKeyType())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKeyType());
 
-		return (RSAPrivateKey) RSAKeyUtils.toRSAPrivateKey((RSAKey) jsonWebKey);
+		return ((RSAKey) jsonWebKey).toRSAPrivateKey();
 	}
 
 	public static ECKey JWK_to_secp256k1PrivateKey(JWK jsonWebKey) throws JOSEException {
@@ -60,11 +61,14 @@ public class JWK_to_PrivateKey {
 		return ecKey.getD().decode();
 	}
 
-	public static ECKey JWK_to_BLS12381_G1PrivateKey(JWK jsonWebKey) throws JOSEException {
+	public static KeyPair JWK_to_BLS12381_G1PrivateKey(JWK jsonWebKey) throws JOSEException {
 
-		byte[] privateKeyBytes = JWK_to_BLS12381_G1PrivateKeyBytes(jsonWebKey);
+		if (! KeyType.EC.equals(jsonWebKey.getKeyType())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKeyType());
 
-		return ECKey.fromPrivate(privateKeyBytes);
+		com.nimbusds.jose.jwk.ECKey ecKey = (com.nimbusds.jose.jwk.ECKey) jsonWebKey;
+		if (! Curves.BLS12381_G1.equals(ecKey.getCurve())) throw new IllegalArgumentException("Incorrect curve: " + ecKey.getCurve());
+
+		return new KeyPair(ecKey.getX().decode(), ecKey.getD().decode());
 	}
 
 	public static byte[] JWK_to_BLS12381_G1PrivateKeyBytes(JWK jsonWebKey) throws JOSEException {
@@ -77,11 +81,14 @@ public class JWK_to_PrivateKey {
 		return ecKey.getD().decode();
 	}
 
-	public static ECKey JWK_to_BLS12381_G2PrivateKey(JWK jsonWebKey) throws JOSEException {
+	public static KeyPair JWK_to_BLS12381_G2PrivateKey(JWK jsonWebKey) throws JOSEException {
 
-		byte[] privateKeyBytes = JWK_to_BLS12381_G2PrivateKeyBytes(jsonWebKey);
+		if (! KeyType.EC.equals(jsonWebKey.getKeyType())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKeyType());
 
-		return ECKey.fromPrivate(privateKeyBytes);
+		com.nimbusds.jose.jwk.ECKey ecKey = (com.nimbusds.jose.jwk.ECKey) jsonWebKey;
+		if (! Curves.BLS12381_G2.equals(ecKey.getCurve())) throw new IllegalArgumentException("Incorrect curve: " + ecKey.getCurve());
+
+		return new KeyPair(ecKey.getX().decode(), ecKey.getD().decode());
 	}
 
 	public static byte[] JWK_to_BLS12381_G2PrivateKeyBytes(JWK jsonWebKey) throws JOSEException {

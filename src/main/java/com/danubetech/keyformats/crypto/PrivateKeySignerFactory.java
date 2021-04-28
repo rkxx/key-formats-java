@@ -1,5 +1,6 @@
 package com.danubetech.keyformats.crypto;
 
+import bbs.signatures.KeyPair;
 import com.danubetech.keyformats.crypto.impl.*;
 import com.danubetech.keyformats.jose.JWSAlgorithms;
 import com.danubetech.keyformats.jose.KeyTypeName;
@@ -26,10 +27,10 @@ public class PrivateKeySignerFactory {
             if (JWSAlgorithm.ES256K.getName().equals(algorithm)) return new secp256k1_ES256K_PrivateKeySigner((ECKey) privateKey);
         } else if (KeyTypeName.BLS12381_G1.equals(keyTypeName)) {
 
-            if (JWSAlgorithms.BBSPlus.getName().equals(algorithm)) return new BLS12381_G1_BBSPlus_PrivateKeySigner((ECKey) privateKey);
+            if (JWSAlgorithms.BBSPlus.getName().equals(algorithm)) return new BLS12381_G1_BBSPlus_PrivateKeySigner((KeyPair) privateKey);
         } else if (KeyTypeName.BLS12381_G2.equals(keyTypeName)) {
 
-            if (JWSAlgorithms.BBSPlus.getName().equals(algorithm)) return new BLS12381_G2_BBSPlus_PrivateKeySigner((ECKey) privateKey);
+            if (JWSAlgorithms.BBSPlus.getName().equals(algorithm)) return new BLS12381_G2_BBSPlus_PrivateKeySigner((KeyPair) privateKey);
         } else if (KeyTypeName.Ed25519.equals(keyTypeName)) {
 
             if (JWSAlgorithm.EdDSA.getName().equals(algorithm)) return new Ed25519_EdDSA_PrivateKeySigner((byte[]) privateKey);
