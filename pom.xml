@@ -31,6 +31,13 @@
 		</repository>
 	</distributionManagement>
 
+	<repositories>
+		<repository>
+			<id>sovrin</id>
+			<url>https://repo.sovrin.org/repository/maven-public</url>
+		</repository>
+	</repositories>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<github.global.server>github</github.global.server>
@@ -129,10 +136,32 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.abstractj.kalium</groupId>
+			<artifactId>kalium</artifactId>
+			<version>0.8.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.bitcoinj</groupId>
 			<artifactId>bitcoinj-core</artifactId>
 			<version>0.15.10</version>
-			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hyperledger</groupId>
+			<artifactId>indy</artifactId>
+			<version>1.14.0</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.google.crypto.tink</groupId>
+			<artifactId>tink</artifactId>
+			<version>1.5.0</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.github.mattrglobal</groupId>
+			<artifactId>bbs.signatures</artifactId>
+			<version>1.5-SNAPSHOT</version>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 

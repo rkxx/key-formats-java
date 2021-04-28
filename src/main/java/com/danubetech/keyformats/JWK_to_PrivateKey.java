@@ -3,9 +3,10 @@ package com.danubetech.keyformats;
 import java.security.interfaces.RSAPrivateKey;
 
 import com.danubetech.keyformats.jose.Curves;
+import com.danubetech.keyformats.jose.KeyTypeName;
 import org.bitcoinj.core.ECKey;
 
-import com.danubetech.keyformats.keytypes.KeyType_for_JWK;
+import com.danubetech.keyformats.keytypes.KeyTypeName_for_JWK;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.crypto.impl.RSAKeyUtils;
 import com.nimbusds.jose.jwk.Curve;
@@ -17,19 +18,19 @@ public class JWK_to_PrivateKey {
 
 	public static Object JWK_to_anyPrivateKey(JWK jsonWebKey) throws JOSEException {
 
-		String keyType = KeyType_for_JWK.keyType_for_JWK(jsonWebKey);
+		KeyTypeName keyType = KeyTypeName_for_JWK.keyTypeName_for_JWK(jsonWebKey);
 
-		if (KeyType.RSA.getValue().equals(keyType))
+		if (keyType == KeyTypeName.RSA)
 			return JWK_to_RSAPrivateKey(jsonWebKey);
-		else if (Curve.SECP256K1.getName().equals(keyType))
+		else if (keyType == KeyTypeName.secp256k1)
 			return JWK_to_secp256k1PrivateKey(jsonWebKey);
-		else if (Curves.BLS12381_G1.equals(keyType))
+		else if (keyType == KeyTypeName.BLS12381_G1)
 			return JWK_to_BLS12381_G1PrivateKey(jsonWebKey);
-		else if (Curves.BLS12381_G2.equals(keyType))
+		else if (keyType == KeyTypeName.BLS12381_G2)
 			return JWK_to_BLS12381_G2PrivateKey(jsonWebKey);
-		else if (Curve.Ed25519.getName().equals(keyType))
+		else if (keyType == KeyTypeName.Ed25519)
 			return JWK_to_Ed25519PrivateKeyBytes(jsonWebKey);
-		else if (Curve.X25519.getName().equals(keyType))
+		else if (keyType == KeyTypeName.X25519)
 			return JWK_to_X25519PrivateKeyBytes(jsonWebKey);
 		else
 			throw new IllegalArgumentException("Unsupported key type: " + keyType);
