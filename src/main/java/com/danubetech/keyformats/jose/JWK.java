@@ -1,8 +1,11 @@
 package com.danubetech.keyformats.jose;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.binary.Base64;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.Map;
 
 public class JWK {
@@ -21,6 +24,14 @@ public class JWK {
 
     public static JWK parse(Map<String, Object> json) {
         return objectMapper.convertValue(json, JWK.class);
+    }
+
+    public static JWK parse(String string) throws IOException {
+        return objectMapper.readValue(new StringReader(string), JWK.class);
+    }
+
+    public String toJSONString() throws JsonProcessingException {
+        return objectMapper.writeValueAsString(this);
     }
 
     public String getKid() {
