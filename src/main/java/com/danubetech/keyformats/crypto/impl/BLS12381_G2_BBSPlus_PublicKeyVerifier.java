@@ -19,7 +19,7 @@ public class BLS12381_G2_BBSPlus_PublicKeyVerifier extends PublicKeyVerifier<ECK
 
         try {
 
-            return Bbs.verify(this.getPublicKey().getPubKey(), signature, new byte[][]{signature});
+            return Bbs.blsVerify(this.getPublicKey().getPubKey(), signature, new byte[][]{signature});
         } catch (GeneralSecurityException ex) {
 
             throw ex;
