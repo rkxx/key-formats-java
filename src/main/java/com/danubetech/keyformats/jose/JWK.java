@@ -1,5 +1,6 @@
 package com.danubetech.keyformats.jose;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.binary.Base64;
@@ -70,6 +71,7 @@ public class JWK {
         return x;
     }
 
+    @JsonIgnore
     public byte[] getXdecoded() {
         String x = this.getX();
         return x != null ? Base64.decodeBase64(x) : null;
@@ -83,6 +85,7 @@ public class JWK {
         return y;
     }
 
+    @JsonIgnore
     public byte[] getYdecoded() {
         String y = this.getY();
         return y != null ? Base64.decodeBase64(y) : null;
@@ -100,6 +103,7 @@ public class JWK {
         this.d = d;
     }
 
+    @JsonIgnore
     public byte[] getDdecoded() {
         String d = this.getD();
         return d != null ? Base64.decodeBase64(d) : null;
