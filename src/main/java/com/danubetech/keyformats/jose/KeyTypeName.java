@@ -9,7 +9,9 @@ public enum KeyTypeName {
     BLS12381_G1(Curve.BLS12381_G1),
     BLS12381_G2(Curve.BLS12381_G2),
     Ed25519(Curve.Ed25519),
-    X25519(Curve.X25519);
+    X25519(Curve.X25519),
+    P_256(Curve.P_256),
+    P_384(Curve.P_384);
 
     private static final Map<String, KeyTypeName> KEY_TYPE_NAME_MAP = new HashMap<>();
 
