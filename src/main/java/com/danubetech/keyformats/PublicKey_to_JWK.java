@@ -1,6 +1,10 @@
 package com.danubetech.keyformats;
 
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 
 import bbs.signatures.KeyPair;
 import com.danubetech.keyformats.jose.Curve;
@@ -14,18 +18,26 @@ public class PublicKey_to_JWK {
 
 	public static JWK RSAPublicKey_to_JWK(RSAPublicKey publicKey, String kid, String use) {
 
-		throw new RuntimeException("Not supported");
-
-/*		JWK jsonWebKey = new JWK();
+		JWK jsonWebKey = new JWK();
+		jsonWebKey.setKty(KeyType.RSA);
 		jsonWebKey.setKid(kid);
 		jsonWebKey.setUse(use);
+		jsonWebKey.setN(Base64.encodeBase64URLSafeString(publicKey.getModulus().toByteArray()));
+		jsonWebKey.setE(Base64.encodeBase64URLSafeString(publicKey.getPublicExponent().toByteArray()));
 
-		JWK jsonWebKey = new com.nimbusds.jose.jwk.RSAKey.Builder(publicKey)
-				.keyID(kid)
-				.keyUse(use == null ? null : new KeyUse(use))
-				.build();
+		return jsonWebKey;
+	}
 
-		return jsonWebKey;*/
+	public static JWK RSAPublicKeyBytes_to_JWK(byte[] publicKeyBytes, String kid, String use) {
+
+		RSAPublicKey publicKey;
+		try {
+			publicKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(publicKeyBytes));
+		} catch (Exception ex) {
+			throw new RuntimeException(ex.getMessage(), ex);
+		}
+
+		return RSAPublicKey_to_JWK(publicKey, kid, use);
 	}
 
 	public static JWK secp256k1PublicKey_to_JWK(ECKey publicKey, String kid, String use) {

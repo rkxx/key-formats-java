@@ -1,7 +1,10 @@
 package com.danubetech.keyformats;
 
+import java.security.KeyFactory;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 
 import bbs.signatures.KeyPair;
@@ -16,15 +19,29 @@ public class PrivateKey_to_JWK {
 
 	public static JWK RSAPrivateKey_to_JWK(RSAPrivateKey privateKey, RSAPublicKey publicKey, String kid, String use) {
 
-		throw new RuntimeException("Not supported");
+		JWK jsonWebKey = new JWK();
+		jsonWebKey.setKty(KeyType.RSA);
+		jsonWebKey.setKid(kid);
+		jsonWebKey.setUse(use);
+		jsonWebKey.setN(Base64.encodeBase64URLSafeString(privateKey.getModulus().toByteArray()));
+		jsonWebKey.setD(Base64.encodeBase64URLSafeString(privateKey.getPrivateExponent().toByteArray()));
+		jsonWebKey.setE(Base64.encodeBase64URLSafeString(publicKey.getPublicExponent().toByteArray()));
 
-/*		com.nimbusds.jose.jwk.RSAKey jsonWebKey = new com.nimbusds.jose.jwk.RSAKey.Builder(publicKey)
-				.privateKey(privateKey)
-				.keyID(kid)
-				.keyUse(use == null ? null : new KeyUse(use))
-				.build();
+		return jsonWebKey;
+	}
 
-		return jsonWebKey;*/
+	public static JWK RSAPrivateKeyBytes_to_JWK(byte[] privateKeyBytes, byte[] publicKeyBytes, String kid, String use) {
+
+		RSAPrivateKey privateKey;
+		RSAPublicKey publicKey;
+		try {
+			privateKey = (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes));
+			publicKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(publicKeyBytes));
+		} catch (Exception ex) {
+			throw new RuntimeException(ex.getMessage(), ex);
+		}
+
+		return RSAPrivateKey_to_JWK(privateKey, publicKey, kid, use);
 	}
 
 	public static JWK secp256k1PrivateKey_to_JWK(ECKey privateKey, String kid, String use) {

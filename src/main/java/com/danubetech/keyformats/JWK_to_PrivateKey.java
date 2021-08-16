@@ -1,6 +1,9 @@
 package com.danubetech.keyformats;
 
+import java.math.BigInteger;
+import java.security.KeyFactory;
 import java.security.interfaces.RSAPrivateKey;
+import java.security.spec.RSAPrivateKeySpec;
 
 import bbs.signatures.KeyPair;
 import com.danubetech.keyformats.jose.Curve;
@@ -37,15 +40,28 @@ public class JWK_to_PrivateKey {
 
 		if (! KeyType.RSA.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
 
-		throw new RuntimeException("Not supported");
-//		return ((RSAKey) jsonWebKey).toRSAPrivateKey();
+		try {
+			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+			RSAPrivateKeySpec rsaPrivateKeySpec = new RSAPrivateKeySpec(new BigInteger(jsonWebKey.getNdecoded()), new BigInteger(jsonWebKey.getDdecoded()));
+			return (RSAPrivateKey) keyFactory.generatePrivate(rsaPrivateKeySpec);
+		} catch (Exception ex) {
+			throw new RuntimeException(ex.getMessage(), ex);
+		}
+	}
+
+	public static byte[] JWK_to_RSAPrivateKeyBytes(JWK jsonWebKey) {
+
+		if (! KeyType.RSA.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
+
+		return JWK_to_RSAPrivateKey(jsonWebKey).getEncoded();
 	}
 
 	public static ECKey JWK_to_secp256k1PrivateKey(JWK jsonWebKey) {
 
-		byte[] privateKeyBytes = JWK_to_secp256k1PrivateKeyBytes(jsonWebKey);
+		if (! KeyType.EC.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
+		if (! Curve.secp256k1.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
 
-		return ECKey.fromPrivate(privateKeyBytes);
+		return ECKey.fromPrivate(jsonWebKey.getDdecoded());
 	}
 
 	public static byte[] JWK_to_secp256k1PrivateKeyBytes(JWK jsonWebKey) {

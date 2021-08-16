@@ -20,6 +20,8 @@ public class JWK {
     private String x;
     private String y;
     private String d;
+    private String n;
+    private String e;
 
     public JWK() {
     }
@@ -147,6 +149,34 @@ public class JWK {
         return d != null ? Base64.decodeBase64(d) : null;
     }
 
+    public String getN() {
+        return n;
+    }
+
+    public void setN(String n) {
+        this.n = n;
+    }
+
+    @JsonIgnore
+    public byte[] getNdecoded() {
+        String n = this.getN();
+        return n != null ? Base64.decodeBase64(n) : null;
+    }
+
+    public String getE() {
+        return e;
+    }
+
+    public void setE(String e) {
+        this.e = e;
+    }
+
+    @JsonIgnore
+    public byte[] getEdecoded() {
+        String e = this.getE();
+        return e != null ? Base64.decodeBase64(e) : null;
+    }
+
     /*
      * Object methods
      */
@@ -161,6 +191,8 @@ public class JWK {
                 ", x='" + x + '\'' +
                 ", y='" + y + '\'' +
                 ", d='" + d + '\'' +
+                ", n='" + n + '\'' +
+                ", e='" + e + '\'' +
                 '}';
     }
 
@@ -169,11 +201,11 @@ public class JWK {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         JWK jwk = (JWK) o;
-        return Objects.equals(kid, jwk.kid) && Objects.equals(use, jwk.use) && Objects.equals(kty, jwk.kty) && Objects.equals(crv, jwk.crv) && Objects.equals(x, jwk.x) && Objects.equals(y, jwk.y) && Objects.equals(d, jwk.d);
+        return Objects.equals(kid, jwk.kid) && Objects.equals(use, jwk.use) && Objects.equals(kty, jwk.kty) && Objects.equals(crv, jwk.crv) && Objects.equals(x, jwk.x) && Objects.equals(y, jwk.y) && Objects.equals(d, jwk.d) && Objects.equals(n, jwk.n) && Objects.equals(e, jwk.e);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(kid, use, kty, crv, x, y, d);
+        return Objects.hash(kid, use, kty, crv, x, y, d, n, e);
     }
 }
