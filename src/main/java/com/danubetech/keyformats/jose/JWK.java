@@ -1,6 +1,7 @@
 package com.danubetech.keyformats.jose;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.binary.Base64;
@@ -30,7 +31,7 @@ public class JWK {
      * Serialization
      */
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
     public static JWK fromJson(String json) throws IOException {
         return objectMapper.readValue(json, JWK.class);
