@@ -11,9 +11,9 @@ public class KeyTypeName_for_JWK {
 		if (KeyType.RSA.equals(jsonWebKey.getKty()))
 			return KeyTypeName.from(jsonWebKey.getKty());	// "RSA"
 		else if (KeyType.EC.equals(jsonWebKey.getKty()))
-			return KeyTypeName.from(jsonWebKey.getCrv());	// "secp256k1", "BLS12381_G1", "BLS12381_G2"
+			return KeyTypeName.from(jsonWebKey.getCrv());	// "secp256k1"
 		else if (KeyType.OKP.equals(jsonWebKey.getKty()))
-			return KeyTypeName.from(jsonWebKey.getCrv());	// "Ed25519", "X25519"
+			return KeyTypeName.from(jsonWebKey.getCrv());	// "Ed25519", "X25519", "Bls12381G1", "Bls12381G2", "Bls48581G1", "Bls48581G2"
 		else
 			throw new IllegalArgumentException("Unsupported key type " + jsonWebKey.getKty());
 	}

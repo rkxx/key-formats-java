@@ -62,13 +62,13 @@ public class PublicKey_to_JWK {
 		return secp256k1PublicKey_to_JWK(publicKey, kid, use);
 	}
 
-	public static JWK BLS12381_G1PublicKey_to_JWK(KeyPair publicKey, String kid, String use) {
+	public static JWK Bls12381G1PublicKey_to_JWK(KeyPair publicKey, String kid, String use) {
 
 		byte[] publicKeyBytes = publicKey.publicKey;
 
 		JWK jsonWebKey = new JWK();
-		jsonWebKey.setKty(KeyType.EC);
-		jsonWebKey.setCrv(Curve.BLS12381_G1);
+		jsonWebKey.setKty(KeyType.OKP);
+		jsonWebKey.setCrv(Curve.Bls12381G1);
 		jsonWebKey.setKid(kid);
 		jsonWebKey.setUse(use);
 		jsonWebKey.setX(Base64.encodeBase64URLSafeString(publicKeyBytes));
@@ -76,20 +76,20 @@ public class PublicKey_to_JWK {
 		return jsonWebKey;
 	}
 
-	public static JWK BLS12381_G1PublicKeyBytes_to_JWK(byte[] publicKeyBytes, String kid, String use) {
+	public static JWK Bls12381G1PublicKeyBytes_to_JWK(byte[] publicKeyBytes, String kid, String use) {
 
 		KeyPair publicKey = new KeyPair(publicKeyBytes, null);
 
-		return BLS12381_G1PublicKey_to_JWK(publicKey, kid, use);
+		return Bls12381G1PublicKey_to_JWK(publicKey, kid, use);
 	}
 
-	public static JWK BLS12381_G2PublicKey_to_JWK(KeyPair publicKey, String kid, String use) {
+	public static JWK Bls12381G2PublicKey_to_JWK(KeyPair publicKey, String kid, String use) {
 
 		byte[] publicKeyBytes = publicKey.publicKey;
 
 		JWK jsonWebKey = new JWK();
-		jsonWebKey.setKty(KeyType.EC);
-		jsonWebKey.setCrv(Curve.BLS12381_G2);
+		jsonWebKey.setKty(KeyType.OKP);
+		jsonWebKey.setCrv(Curve.Bls12381G2);
 		jsonWebKey.setKid(kid);
 		jsonWebKey.setUse(use);
 		jsonWebKey.setX(Base64.encodeBase64URLSafeString(publicKeyBytes));
@@ -97,11 +97,11 @@ public class PublicKey_to_JWK {
 		return jsonWebKey;
 	}
 
-	public static JWK BLS12381_G2PublicKeyBytes_to_JWK(byte[] publicKeyBytes, String kid, String use) {
+	public static JWK Bls12381G2PublicKeyBytes_to_JWK(byte[] publicKeyBytes, String kid, String use) {
 
 		KeyPair publicKey = new KeyPair(publicKeyBytes, null);
 
-		return BLS12381_G2PublicKey_to_JWK(publicKey, kid, use);
+		return Bls12381G2PublicKey_to_JWK(publicKey, kid, use);
 	}
 
 	public static JWK Ed25519PublicKeyBytes_to_JWK(byte[] publicKeyBytes, String kid, String use) {

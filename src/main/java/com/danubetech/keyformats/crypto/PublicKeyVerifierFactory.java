@@ -22,12 +22,12 @@ public class PublicKeyVerifierFactory {
         } else if (KeyTypeName.secp256k1.equals(keyTypeName)) {
 
             if (JWSAlgorithm.ES256K.equals(algorithm)) return new secp256k1_ES256K_PublicKeyVerifier((ECKey) publicKey);
-        } else if (KeyTypeName.BLS12381_G1.equals(keyTypeName)) {
+        } else if (KeyTypeName.Bls12381G1.equals(keyTypeName)) {
 
-            if (JWSAlgorithm.BBSPlus.equals(algorithm)) return new BLS12381_G1_BBSPlus_PublicKeyVerifier((ECKey) publicKey);
-        } else if (KeyTypeName.BLS12381_G2.equals(keyTypeName)) {
+            if (JWSAlgorithm.BBSPlus.equals(algorithm)) return new Bls12381G1_BBSPlus_PublicKeyVerifier((ECKey) publicKey);
+        } else if (KeyTypeName.Bls12381G2.equals(keyTypeName)) {
 
-            if (JWSAlgorithm.BBSPlus.equals(algorithm)) return new BLS12381_G2_BBSPlus_PublicKeyVerifier((ECKey) publicKey);
+            if (JWSAlgorithm.BBSPlus.equals(algorithm)) return new Bls12381G2_BBSPlus_PublicKeyVerifier((ECKey) publicKey);
         } else if (KeyTypeName.Ed25519.equals(keyTypeName)) {
 
             if (JWSAlgorithm.EdDSA.equals(algorithm)) return new Ed25519_EdDSA_PublicKeyVerifier((byte[]) publicKey);

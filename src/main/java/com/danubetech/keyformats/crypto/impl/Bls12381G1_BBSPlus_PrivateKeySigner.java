@@ -7,9 +7,9 @@ import com.danubetech.keyformats.jose.JWSAlgorithm;
 
 import java.security.GeneralSecurityException;
 
-public class BLS12381_G1_BBSPlus_PrivateKeySigner extends PrivateKeySigner<KeyPair> {
+public class Bls12381G1_BBSPlus_PrivateKeySigner extends PrivateKeySigner<KeyPair> {
 
-    public BLS12381_G1_BBSPlus_PrivateKeySigner(KeyPair privateKey) {
+    public Bls12381G1_BBSPlus_PrivateKeySigner(KeyPair privateKey) {
 
         super(privateKey, JWSAlgorithm.BBSPlus);
     }

@@ -7,9 +7,9 @@ import org.bitcoinj.core.ECKey;
 
 import java.security.GeneralSecurityException;
 
-public class BLS12381_G2_BBSPlus_PublicKeyVerifier extends PublicKeyVerifier<ECKey> {
+public class Bls12381G2_BBSPlus_PublicKeyVerifier extends PublicKeyVerifier<ECKey> {
 
-    public BLS12381_G2_BBSPlus_PublicKeyVerifier(ECKey publicKey) {
+    public Bls12381G2_BBSPlus_PublicKeyVerifier(ECKey publicKey) {
 
         super(publicKey, JWSAlgorithm.BBSPlus);
     }

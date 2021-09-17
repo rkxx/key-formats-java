@@ -68,14 +68,14 @@ public class PrivateKey_to_JWK {
 		return secp256k1PrivateKey_to_JWK(privateKey, kid, use);
 	}
 
-	public static JWK BLS12381_G1PrivateKey_to_JWK(KeyPair privateKey, String kid, String use) {
+	public static JWK Bls12381G1PrivateKey_to_JWK(KeyPair privateKey, String kid, String use) {
 
 		byte[] publicKeyBytes = privateKey.publicKey;
 		byte[] privateKeyBytes = privateKey.secretKey;
 
 		JWK jsonWebKey = new JWK();
-		jsonWebKey.setKty(KeyType.EC);
-		jsonWebKey.setCrv(Curve.BLS12381_G1);
+		jsonWebKey.setKty(KeyType.OKP);
+		jsonWebKey.setCrv(Curve.Bls12381G1);
 		jsonWebKey.setKid(kid);
 		jsonWebKey.setUse(use);
 		jsonWebKey.setX(Base64.encodeBase64URLSafeString(publicKeyBytes));
@@ -84,21 +84,21 @@ public class PrivateKey_to_JWK {
 		return jsonWebKey;
 	}
 
-	public static JWK BLS12381_G1PrivateKeyBytes_to_JWK(byte[] privateKeyBytes, byte[] publicKeyBytes, String kid, String use) {
+	public static JWK Bls12381G1PrivateKeyBytes_to_JWK(byte[] privateKeyBytes, byte[] publicKeyBytes, String kid, String use) {
 
 		KeyPair privateKey = new KeyPair(publicKeyBytes, privateKeyBytes);
 
-		return BLS12381_G1PrivateKey_to_JWK(privateKey, kid, use);
+		return Bls12381G1PrivateKey_to_JWK(privateKey, kid, use);
 	}
 
-	public static JWK BLS12381_G2PrivateKey_to_JWK(KeyPair privateKey, String kid, String use) {
+	public static JWK Bls12381G2PrivateKey_to_JWK(KeyPair privateKey, String kid, String use) {
 
 		byte[] publicKeyBytes = privateKey.publicKey;
 		byte[] privateKeyBytes = privateKey.secretKey;
 
 		JWK jsonWebKey = new JWK();
-		jsonWebKey.setKty(KeyType.EC);
-		jsonWebKey.setCrv(Curve.BLS12381_G2);
+		jsonWebKey.setKty(KeyType.OKP);
+		jsonWebKey.setCrv(Curve.Bls12381G2);
 		jsonWebKey.setKid(kid);
 		jsonWebKey.setUse(use);
 		jsonWebKey.setX(Base64.encodeBase64URLSafeString(publicKeyBytes));
@@ -107,11 +107,11 @@ public class PrivateKey_to_JWK {
 		return jsonWebKey;
 	}
 
-	public static JWK BLS12381_G2PrivateKeyBytes_to_JWK(byte[] privateKeyBytes, byte[] publicKeyBytes, String kid, String use) {
+	public static JWK Bls12381G2PrivateKeyBytes_to_JWK(byte[] privateKeyBytes, byte[] publicKeyBytes, String kid, String use) {
 
 		KeyPair privateKey = new KeyPair(publicKeyBytes, privateKeyBytes);
 
-		return BLS12381_G2PrivateKey_to_JWK(privateKey, kid, use);
+		return Bls12381G2PrivateKey_to_JWK(privateKey, kid, use);
 	}
 
 	public static JWK Ed25519PrivateKeyBytes_to_JWK(byte[] privateKeyBytes, byte[] publicKeyBytes, String kid, String use) {

@@ -23,12 +23,12 @@ public class PrivateKeySignerFactory {
         } else if (KeyTypeName.secp256k1.equals(keyTypeName)) {
 
             if (JWSAlgorithm.ES256K.equals(algorithm)) return new secp256k1_ES256K_PrivateKeySigner((ECKey) privateKey);
-        } else if (KeyTypeName.BLS12381_G1.equals(keyTypeName)) {
+        } else if (KeyTypeName.Bls12381G1.equals(keyTypeName)) {
 
-            if (JWSAlgorithm.BBSPlus.equals(algorithm)) return new BLS12381_G1_BBSPlus_PrivateKeySigner((KeyPair) privateKey);
-        } else if (KeyTypeName.BLS12381_G2.equals(keyTypeName)) {
+            if (JWSAlgorithm.BBSPlus.equals(algorithm)) return new Bls12381G1_BBSPlus_PrivateKeySigner((KeyPair) privateKey);
+        } else if (KeyTypeName.Bls12381G2.equals(keyTypeName)) {
 
-            if (JWSAlgorithm.BBSPlus.equals(algorithm)) return new BLS12381_G2_BBSPlus_PrivateKeySigner((KeyPair) privateKey);
+            if (JWSAlgorithm.BBSPlus.equals(algorithm)) return new Bls12381G2_BBSPlus_PrivateKeySigner((KeyPair) privateKey);
         } else if (KeyTypeName.Ed25519.equals(keyTypeName)) {
 
             if (JWSAlgorithm.EdDSA.equals(algorithm)) return new Ed25519_EdDSA_PrivateKeySigner((byte[]) privateKey);

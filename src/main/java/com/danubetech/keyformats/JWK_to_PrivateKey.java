@@ -24,10 +24,14 @@ public class JWK_to_PrivateKey {
 			return JWK_to_RSAPrivateKey(jsonWebKey);
 		else if (keyType == KeyTypeName.secp256k1)
 			return JWK_to_secp256k1PrivateKey(jsonWebKey);
-		else if (keyType == KeyTypeName.BLS12381_G1)
-			return JWK_to_BLS12381_G1PrivateKey(jsonWebKey);
-		else if (keyType == KeyTypeName.BLS12381_G2)
-			return JWK_to_BLS12381_G2PrivateKey(jsonWebKey);
+		else if (keyType == KeyTypeName.Bls12381G1)
+			return JWK_to_Bls12381G1PrivateKey(jsonWebKey);
+		else if (keyType == KeyTypeName.Bls12381G2)
+			return JWK_to_Bls12381G2PrivateKey(jsonWebKey);
+		else if (keyType == KeyTypeName.Bls48581G1)
+			return JWK_to_Bls12381G1PrivateKey(jsonWebKey);
+		else if (keyType == KeyTypeName.Bls48581G2)
+			return JWK_to_Bls12381G2PrivateKey(jsonWebKey);
 		else if (keyType == KeyTypeName.Ed25519)
 			return JWK_to_Ed25519PrivateKeyBytes(jsonWebKey);
 		else if (keyType == KeyTypeName.X25519)
@@ -72,34 +76,66 @@ public class JWK_to_PrivateKey {
 		return jsonWebKey.getDdecoded();
 	}
 
-	public static KeyPair JWK_to_BLS12381_G1PrivateKey(JWK jsonWebKey) {
+	public static KeyPair JWK_to_Bls12381G1PrivateKey(JWK jsonWebKey) {
 
-		if (! KeyType.EC.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
-		if (! Curve.BLS12381_G1.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
+		if (! KeyType.OKP.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
+		if (! Curve.Bls12381G1.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
 
 		return new KeyPair(jsonWebKey.getXdecoded(), jsonWebKey.getDdecoded());
 	}
 
-	public static byte[] JWK_to_BLS12381_G1PrivateKeyBytes(JWK jsonWebKey) {
+	public static byte[] JWK_to_Bls12381G1PrivateKeyBytes(JWK jsonWebKey) {
 
-		if (! KeyType.EC.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
-		if (! Curve.BLS12381_G1.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
+		if (! KeyType.OKP.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
+		if (! Curve.Bls12381G1.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
 
 		return jsonWebKey.getDdecoded();
 	}
 
-	public static KeyPair JWK_to_BLS12381_G2PrivateKey(JWK jsonWebKey) {
+	public static KeyPair JWK_to_Bls12381G2PrivateKey(JWK jsonWebKey) {
 
-		if (! KeyType.EC.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
-		if (! Curve.BLS12381_G2.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
+		if (! KeyType.OKP.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
+		if (! Curve.Bls12381G2.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
 
 		return new KeyPair(jsonWebKey.getXdecoded(), jsonWebKey.getDdecoded());
 	}
 
-	public static byte[] JWK_to_BLS12381_G2PrivateKeyBytes(JWK jsonWebKey) {
+	public static byte[] JWK_to_Bls12381G2PrivateKeyBytes(JWK jsonWebKey) {
 
-		if (! KeyType.EC.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
-		if (! Curve.BLS12381_G2.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
+		if (! KeyType.OKP.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
+		if (! Curve.Bls12381G2.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
+
+		return jsonWebKey.getDdecoded();
+	}
+
+	public static KeyPair JWK_to_Bls48581G1PrivateKey(JWK jsonWebKey) {
+
+		if (! KeyType.OKP.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
+		if (! Curve.Bls48581G1.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
+
+		return new KeyPair(jsonWebKey.getXdecoded(), jsonWebKey.getDdecoded());
+	}
+
+	public static byte[] JWK_to_Bls48581G1PrivateKeyBytes(JWK jsonWebKey) {
+
+		if (! KeyType.OKP.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
+		if (! Curve.Bls48581G1.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
+
+		return jsonWebKey.getDdecoded();
+	}
+
+	public static KeyPair JWK_to_Bls48581G2PrivateKey(JWK jsonWebKey) {
+
+		if (! KeyType.OKP.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
+		if (! Curve.Bls48581G2.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
+
+		return new KeyPair(jsonWebKey.getXdecoded(), jsonWebKey.getDdecoded());
+	}
+
+	public static byte[] JWK_to_Bls48581G2PrivateKeyBytes(JWK jsonWebKey) {
+
+		if (! KeyType.OKP.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
+		if (! Curve.Bls48581G2.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
 
 		return jsonWebKey.getDdecoded();
 	}
