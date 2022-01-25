@@ -6,6 +6,10 @@ This is an implementation of various key formats used by DIDs and Verifiable Cre
 
 ## Maven
 
+Build:
+
+	mvn clean install
+
 Dependency:
 
 	<repositories>
