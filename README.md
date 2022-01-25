@@ -2,19 +2,23 @@
 
 ## Information
 
-This is a work-in-progress implementation of various key formats used by DIDs and Verifiable Credentials.
-
-Not ready for production use! Use at your own risk! Pull requests welcome.
+This is an implementation of various key formats used by DIDs and Verifiable Credentials.
 
 ## Maven
 
 Dependency:
 
+	<repositories>
+		<repository>
+			<id>danubetech-maven-public</id>
+			<url>https://repo.danubetech.com/repository/maven-public/</url>
+		</repository>
+	</repositories>
+
 	<dependency>
 		<groupId>com.danubetech</groupId>
 		<artifactId>key-formats-java</artifactId>
-		<version>0.3-SNAPSHOT</version>
-		<scope>compile</scope>
+		<version>1.2.0</version>
 	</dependency>
 
 ## About
