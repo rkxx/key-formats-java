@@ -1,18 +1,17 @@
 package com.danubetech.keyformats;
 
-import java.math.BigInteger;
-import java.security.KeyFactory;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.spec.RSAPrivateKeySpec;
-
 import bbs.signatures.KeyPair;
 import com.danubetech.keyformats.jose.Curve;
 import com.danubetech.keyformats.jose.JWK;
 import com.danubetech.keyformats.jose.KeyType;
 import com.danubetech.keyformats.jose.KeyTypeName;
+import com.danubetech.keyformats.keytypes.KeyTypeName_for_JWK;
 import org.bitcoinj.core.ECKey;
 
-import com.danubetech.keyformats.keytypes.KeyTypeName_for_JWK;
+import java.math.BigInteger;
+import java.security.KeyFactory;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.spec.RSAPrivateKeySpec;
 
 public class JWK_to_PrivateKey {
 
@@ -36,6 +35,10 @@ public class JWK_to_PrivateKey {
 			return JWK_to_Ed25519PrivateKeyBytes(jsonWebKey);
 		else if (keyType == KeyTypeName.X25519)
 			return JWK_to_X25519PrivateKeyBytes(jsonWebKey);
+		else if (keyType == KeyTypeName.P_256)
+			return JWK_to_P_256PrivateKeyBytes(jsonWebKey);
+		else if (keyType == KeyTypeName.P_384)
+			return JWK_to_P_384PrivateKeyBytes(jsonWebKey);
 		else
 			throw new IllegalArgumentException("Unsupported key type: " + keyType);
 	}
@@ -162,5 +165,21 @@ public class JWK_to_PrivateKey {
 		System.arraycopy(jsonWebKey.getXdecoded(), 0, privateKeyBytes, 32, 32);
 
 		return privateKeyBytes;
+	}
+
+	public static byte[] JWK_to_P_256PrivateKeyBytes(JWK jsonWebKey) {
+
+		if (! KeyType.EC.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
+		if (! Curve.P_256.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
+
+		return jsonWebKey.getDdecoded();
+	}
+
+	public static byte[] JWK_to_P_384PrivateKeyBytes(JWK jsonWebKey) {
+
+		if (! KeyType.EC.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
+		if (! Curve.P_384.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
+
+		return jsonWebKey.getDdecoded();
 	}
 }
