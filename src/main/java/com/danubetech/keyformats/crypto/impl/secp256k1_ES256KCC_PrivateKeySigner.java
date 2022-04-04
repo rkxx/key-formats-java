@@ -3,7 +3,6 @@ package com.danubetech.keyformats.crypto.impl;
 import com.danubetech.keyformats.crypto.PrivateKeySigner;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import org.bitcoinj.core.ECKey;
-import org.bitcoinj.core.Utils;
 import org.web3j.crypto.ECDSASignature;
 import org.web3j.crypto.ECKeyPair;
 import org.web3j.crypto.Hash;
@@ -25,8 +24,6 @@ public class secp256k1_ES256KCC_PrivateKeySigner extends PrivateKeySigner<ECKey>
 
         byte[] hash = Hash.sha3(content);
 
-
-
         ECKeyPair ec = ECKeyPair.create(this.getPrivateKey().getPrivKey());
         ECDSASignature ecdsaSignature = ec.sign(hash);
 
@@ -35,7 +32,7 @@ public class secp256k1_ES256KCC_PrivateKeySigner extends PrivateKeySigner<ECKey>
         int headerByte;
         for(headerByte = 0; headerByte < 4; ++headerByte) {
             BigInteger k = Sign.recoverFromSignature(headerByte, ecdsaSignature, hash);
-            if (k != null && k.equals(ec.getPrivateKey())) {
+            if (k != null && k.equals(ec.getPublicKey())) {
                 recId = headerByte;
                 break;
             }
