@@ -22,6 +22,7 @@ public class PublicKeyVerifierFactory {
         } else if (KeyTypeName.secp256k1.equals(keyTypeName)) {
 
             if (JWSAlgorithm.ES256K.equals(algorithm)) return new secp256k1_ES256K_PublicKeyVerifier((ECKey) publicKey);
+            if (JWSAlgorithm.ES256KCC.equals(algorithm)) return new secp256k1_ES256KCC_PublicKeyVerifier((ECKey) publicKey);
         } else if (KeyTypeName.Bls12381G1.equals(keyTypeName)) {
 
             if (JWSAlgorithm.BBSPlus.equals(algorithm)) return new Bls12381G1_BBSPlus_PublicKeyVerifier((ECKey) publicKey);

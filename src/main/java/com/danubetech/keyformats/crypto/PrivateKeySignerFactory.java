@@ -23,6 +23,7 @@ public class PrivateKeySignerFactory {
         } else if (KeyTypeName.secp256k1.equals(keyTypeName)) {
 
             if (JWSAlgorithm.ES256K.equals(algorithm)) return new secp256k1_ES256K_PrivateKeySigner((ECKey) privateKey);
+            if (JWSAlgorithm.ES256KCC.equals(algorithm)) return new secp256k1_ES256KCC_PrivateKeySigner((ECKey) privateKey);
         } else if (KeyTypeName.Bls12381G1.equals(keyTypeName)) {
 
             if (JWSAlgorithm.BBSPlus.equals(algorithm)) return new Bls12381G1_BBSPlus_PrivateKeySigner((KeyPair) privateKey);
