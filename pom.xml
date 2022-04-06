@@ -181,7 +181,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.web3j</groupId>
-			<artifactId>core</artifactId>
+			<artifactId>crypto</artifactId>
 			<version>4.8.7</version>
 		</dependency>
 	</dependencies>
