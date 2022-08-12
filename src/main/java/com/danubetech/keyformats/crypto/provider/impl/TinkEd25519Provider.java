@@ -1,26 +1,20 @@
 package com.danubetech.keyformats.crypto.provider.impl;
 
-import com.google.crypto.tink.KeyTemplate;
-import com.google.crypto.tink.config.TinkConfig;
-import com.google.crypto.tink.signature.Ed25519PrivateKeyManager;
+import com.danubetech.keyformats.crypto.provider.Ed25519Provider;
+import com.google.crypto.tink.signature.SignatureConfig;
 import com.google.crypto.tink.subtle.Ed25519Sign;
 import com.google.crypto.tink.subtle.Ed25519Verify;
-import com.danubetech.keyformats.crypto.provider.Ed25519Provider;
 
 import java.security.GeneralSecurityException;
 
 public class TinkEd25519Provider extends Ed25519Provider {
 
-	private static final KeyTemplate KEY_TEMPLATE;
+	public static final int SEED_LEN = 32;
 
 	static {
-
 		try {
-
-			TinkConfig.register();
-			KEY_TEMPLATE = Ed25519PrivateKeyManager.ed25519Template();
+			SignatureConfig.register();
 		} catch (GeneralSecurityException ex) {
-
 			throw new ExceptionInInitializerError(ex);
 		}
 	}
@@ -35,8 +29,9 @@ public class TinkEd25519Provider extends Ed25519Provider {
 
 		Ed25519Sign.KeyPair tinkKeyPair = Ed25519Sign.KeyPair.newKeyPair();
 
-		System.arraycopy(privateKey, 0, tinkKeyPair.getPrivateKey(), 0, Ed25519Sign.SECRET_KEY_LEN);
-		System.arraycopy(publicKey, 0, tinkKeyPair.getPublicKey(), 0, Ed25519Verify.PUBLIC_KEY_LEN);
+		System.arraycopy(tinkKeyPair.getPrivateKey(), 0, privateKey, 0, Ed25519Sign.SECRET_KEY_LEN);
+		System.arraycopy(tinkKeyPair.getPublicKey(), 0, publicKey, 0, Ed25519Verify.PUBLIC_KEY_LEN);
+		System.arraycopy(publicKey, 0, privateKey, Ed25519Verify.PUBLIC_KEY_LEN, Ed25519Verify.PUBLIC_KEY_LEN);
 	}
 
 	@Override
@@ -44,8 +39,15 @@ public class TinkEd25519Provider extends Ed25519Provider {
 
 		if (privateKey.length != Ed25519Sign.SECRET_KEY_LEN + Ed25519Verify.PUBLIC_KEY_LEN) throw new GeneralSecurityException("Invalid private key length: " + privateKey.length);
 		if (publicKey.length != Ed25519Verify.PUBLIC_KEY_LEN) throw new GeneralSecurityException("Invalid public key length: "+ publicKey.length);
+		if (seed.length != SEED_LEN) throw new GeneralSecurityException("Invalid seed length: "+ publicKey.length);
 
-		throw new RuntimeException("Not supported");
+		// create key pair
+
+		Ed25519Sign.KeyPair tinkKeyPair = Ed25519Sign.KeyPair.newKeyPairFromSeed(seed);
+
+		System.arraycopy(tinkKeyPair.getPrivateKey(), 0, privateKey, 0, Ed25519Sign.SECRET_KEY_LEN);
+		System.arraycopy(tinkKeyPair.getPublicKey(), 0, publicKey, 0, Ed25519Verify.PUBLIC_KEY_LEN);
+		System.arraycopy(publicKey, 0, privateKey, Ed25519Verify.PUBLIC_KEY_LEN, Ed25519Verify.PUBLIC_KEY_LEN);
 	}
 
 	@Override
@@ -71,7 +73,6 @@ public class TinkEd25519Provider extends Ed25519Provider {
 
 			new Ed25519Verify(publicKey).verify(signature, content);
 		} catch (GeneralSecurityException ex) {
-
 			return false;
 		}
 

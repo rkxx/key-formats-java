@@ -12,6 +12,8 @@ import java.util.Arrays;
 
 public class NaClSodiumEd25519Provider extends Ed25519Provider {
 
+	public static final int SEED_LEN = 32;
+
 	private static final Sodium SODIUM;
 
 	static {
@@ -42,6 +44,7 @@ public class NaClSodiumEd25519Provider extends Ed25519Provider {
 
 		if (privateKey.length != Sodium.CRYPTO_SIGN_ED25519_SECRETKEYBYTES) throw new GeneralSecurityException("Invalid private key length: " + privateKey.length);
 		if (publicKey.length != Sodium.CRYPTO_SIGN_ED25519_PUBLICKEYBYTES) throw new GeneralSecurityException("Invalid public key length: " + publicKey.length);
+		if (seed.length != SEED_LEN) throw new GeneralSecurityException("Invalid seed length: "+ publicKey.length);
 
 		// create key pair
 
