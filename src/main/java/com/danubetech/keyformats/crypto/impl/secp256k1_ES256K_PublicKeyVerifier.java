@@ -2,15 +2,14 @@ package com.danubetech.keyformats.crypto.impl;
 
 import com.danubetech.keyformats.crypto.PublicKeyVerifier;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
-import org.bitcoinj.core.ECKey;
-import org.bitcoinj.core.Sha256Hash;
 
-import java.math.BigInteger;
 import java.security.GeneralSecurityException;
+import java.security.Signature;
+import java.security.interfaces.ECPublicKey;
 
-public class secp256k1_ES256K_PublicKeyVerifier extends PublicKeyVerifier<ECKey> {
+public class secp256k1_ES256K_PublicKeyVerifier extends PublicKeyVerifier<ECPublicKey> {
 
-    public secp256k1_ES256K_PublicKeyVerifier(ECKey publicKey) {
+    public secp256k1_ES256K_PublicKeyVerifier(ECPublicKey publicKey) {
 
         super(publicKey, JWSAlgorithm.ES256K);
     }
@@ -18,13 +17,11 @@ public class secp256k1_ES256K_PublicKeyVerifier extends PublicKeyVerifier<ECKey>
     @Override
     public boolean verify(byte[] content, byte[] signature) throws GeneralSecurityException {
 
-        byte[] r = new byte[32];
-        byte[] s = new byte[32];
-        System.arraycopy(signature, 0, r, 0, r.length);
-        System.arraycopy(signature, 32, s, 0, s.length);
+        Signature jcaSignature = Signature.getInstance("SHA256withECDSA");
 
-        ECKey.ECDSASignature ecdsaSignature = new ECKey.ECDSASignature(new BigInteger(1, r), new BigInteger(1, s));
+        jcaSignature.initVerify(this.getPublicKey());
+        jcaSignature.update(content);
 
-        return this.getPublicKey().verify(Sha256Hash.of(content), ecdsaSignature);
+        return jcaSignature.verify(signature);
     }
 }
