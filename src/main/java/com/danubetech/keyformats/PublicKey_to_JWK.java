@@ -1,11 +1,5 @@
 package com.danubetech.keyformats;
 
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.interfaces.RSAPublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.X509EncodedKeySpec;
-
 import bbs.signatures.KeyPair;
 import com.danubetech.keyformats.jose.Curve;
 import com.danubetech.keyformats.jose.JWK;
@@ -13,9 +7,19 @@ import com.danubetech.keyformats.jose.KeyType;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.bitcoinj.core.ECKey;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.math.ec.ECPoint;
 
+import java.security.KeyFactory;
+import java.security.Security;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.X509EncodedKeySpec;
+
 public class PublicKey_to_JWK {
+
+	static {
+		Security.addProvider(new BouncyCastleProvider());
+	}
 
 	public static JWK RSAPublicKey_to_JWK(RSAPublicKey publicKey, String kid, String use) {
 
