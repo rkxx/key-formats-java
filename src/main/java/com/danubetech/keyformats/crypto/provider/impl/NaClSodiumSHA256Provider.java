@@ -1,27 +1,21 @@
 package com.danubetech.keyformats.crypto.provider.impl;
 
 import com.danubetech.keyformats.crypto.provider.SHA256Provider;
-import org.abstractj.kalium.NaCl;
-import org.abstractj.kalium.NaCl.Sodium;
+import com.goterl.lazysodium.LazySodiumJava;
+import com.goterl.lazysodium.SodiumJava;
+import com.goterl.lazysodium.interfaces.Hash;
 
 import java.security.GeneralSecurityException;
 
 public class NaClSodiumSHA256Provider extends SHA256Provider {
 
-	private Sodium sodium;
-
-	public NaClSodiumSHA256Provider() {
-
-		NaCl.init();
-		this.sodium = NaCl.sodium();
-	}
+	private static final LazySodiumJava lazySodium = new LazySodiumJava(new SodiumJava());
+	private static final Hash.Native hashNative = lazySodium;
 
 	@Override
 	public byte[] sha256(byte[] bytes) throws GeneralSecurityException {
-
 		byte[] buffer = new byte[32];
-		sodium.crypto_hash_sha256(buffer, bytes, bytes.length);
-
+		hashNative.cryptoHashSha256(buffer, bytes, bytes.length);
 		return buffer;
 	}
 }

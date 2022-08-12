@@ -1,27 +1,19 @@
 package com.danubetech.keyformats.crypto.provider.impl;
 
 import com.danubetech.keyformats.crypto.provider.RandomProvider;
-import org.abstractj.kalium.NaCl;
-import org.abstractj.kalium.NaCl.Sodium;
+import com.goterl.lazysodium.LazySodiumJava;
+import com.goterl.lazysodium.SodiumJava;
+import com.goterl.lazysodium.interfaces.Random;
 
 import java.security.GeneralSecurityException;
 
 public class NaClSodiumRandomProvider extends RandomProvider {
 
-	private Sodium sodium;
-
-	public NaClSodiumRandomProvider() {
-
-		NaCl.init();
-		this.sodium = NaCl.sodium();
-	}
+	private static final LazySodiumJava lazySodium = new LazySodiumJava(new SodiumJava());
+	private static final Random random = lazySodium;
 
 	@Override
 	public byte[] randomBytes(int length) throws GeneralSecurityException {
-
-		byte[] randomBytes = new byte[length];
-		sodium.randombytes(randomBytes, 256);
-
-		return randomBytes;
+		return random.randomBytesBuf(length);
 	}
 }
