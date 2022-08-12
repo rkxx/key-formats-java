@@ -13,7 +13,8 @@ public enum KeyTypeName {
     Ed25519(Curve.Ed25519),
     X25519(Curve.X25519),
     P_256(Curve.P_256),
-    P_384(Curve.P_384);
+    P_384(Curve.P_384),
+    P_521(Curve.P_521);
 
     private static final Map<String, KeyTypeName> KEY_TYPE_NAME_MAP = new HashMap<>();
 

@@ -1,4 +1,4 @@
-package com.danubetech.keyformats;
+package com.danubetech.keyformats.provider;
 import com.danubetech.keyformats.crypto.provider.Ed25519Provider;
 import com.danubetech.keyformats.crypto.provider.RandomProvider;
 import com.danubetech.keyformats.crypto.provider.impl.JavaRandomProvider;

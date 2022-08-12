@@ -7,9 +7,9 @@ import com.danubetech.keyformats.jose.JWSAlgorithm;
 
 import java.security.GeneralSecurityException;
 
-public class Bls12381G1_BBSPlus_PublicKeyVerifier extends PublicKeyVerifier<KeyPair> {
+public class Bls48581G2_BBSPlus_PublicKeyVerifier extends PublicKeyVerifier<KeyPair> {
 
-    public Bls12381G1_BBSPlus_PublicKeyVerifier(KeyPair publicKey) {
+    public Bls48581G2_BBSPlus_PublicKeyVerifier(KeyPair publicKey) {
 
         super(publicKey, JWSAlgorithm.BBSPlus);
     }

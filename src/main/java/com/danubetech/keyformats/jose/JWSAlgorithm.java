@@ -9,5 +9,6 @@ public class JWSAlgorithm {
     public static final String EdDSA = "EdDSA";
     public static final String ES256 = "ES256";
     public static final String ES384 = "ES384";
+    public static final String ES512 = "ES512";
     public static final String ES256KCC = "ES256KCC";
 }
