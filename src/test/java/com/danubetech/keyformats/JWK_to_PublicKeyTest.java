@@ -70,7 +70,7 @@ public class JWK_to_PublicKeyTest {
 		byte[] p_256Bytes = JWK_to_PublicKey.JWK_to_P_256PublicKeyBytes(p_256Jwk);
 		byte[] p_384Bytes = JWK_to_PublicKey.JWK_to_P_384PublicKeyBytes(p_384Jwk);
 		JWK rsaJwk2 = PublicKey_to_JWK.RSAPublicKeyBytes_to_JWK(rsaBytes, null, null);
-		JWK secp256k1Jwk2 = PublicKey_to_JWK.RSAPublicKeyBytes_to_JWK(sep256k1Bytes, null, null);
+		JWK secp256k1Jwk2 = PublicKey_to_JWK.secp256k1PublicKeyBytes_to_JWK(sep256k1Bytes, null, null);
 		JWK ed25519Jwk2 = PublicKey_to_JWK.Ed25519PublicKeyBytes_to_JWK(ed25519Bytes, null, null);
 		JWK x25519Jwk2 = PublicKey_to_JWK.X25519PublicKeyBytes_to_JWK(x25519Bytes, null, null);
 		JWK p_256Jwk2 = PublicKey_to_JWK.P_256PublicKeyBytes_to_JWK(p_256Bytes, null, null);
