@@ -158,7 +158,7 @@ public class JWK_to_PublicKey {
 	public static byte[] JWK_to_P_384PublicKeyBytes(JWK jsonWebKey) {
 
 		if (! KeyType.EC.equals(jsonWebKey.getKty())) throw new IllegalArgumentException("Incorrect key type: " + jsonWebKey.getKty());
-		if (! Curve.P_256.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
+		if (! Curve.P_384.equals(jsonWebKey.getCrv())) throw new IllegalArgumentException("Incorrect curve: " + jsonWebKey.getCrv());
 
 		byte[] xDecoded = jsonWebKey.getXdecoded();
 		if (xDecoded.length != 48) throw new IllegalArgumentException("Invalid 'x' value (not 48 bytes): " + jsonWebKey.getX() + ", length=" + jsonWebKey.getXdecoded().length);
