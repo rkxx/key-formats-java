@@ -50,7 +50,7 @@ public class JWK_to_PublicKey {
 
 		try {
 			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-			RSAPublicKeySpec rsaPublicKeySpec = new RSAPublicKeySpec(new BigInteger(jsonWebKey.getNdecoded()), new BigInteger(jsonWebKey.getEdecoded()));
+			RSAPublicKeySpec rsaPublicKeySpec = new RSAPublicKeySpec(new BigInteger(1, jsonWebKey.getNdecoded()), new BigInteger(1, jsonWebKey.getEdecoded()));
 			return (RSAPublicKey) keyFactory.generatePublic(rsaPublicKeySpec);
 		} catch (InvalidKeySpecException | NoSuchAlgorithmException ex) {
 			throw new RuntimeException(ex.getMessage(), ex);

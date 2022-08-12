@@ -49,7 +49,7 @@ public class JWK_to_PrivateKey {
 
 		try {
 			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-			RSAPrivateKeySpec rsaPrivateKeySpec = new RSAPrivateKeySpec(new BigInteger(jsonWebKey.getNdecoded()), new BigInteger(jsonWebKey.getDdecoded()));
+			RSAPrivateKeySpec rsaPrivateKeySpec = new RSAPrivateKeySpec(new BigInteger(1, jsonWebKey.getNdecoded()), new BigInteger(1, jsonWebKey.getDdecoded()));
 			return (RSAPrivateKey) keyFactory.generatePrivate(rsaPrivateKeySpec);
 		} catch (Exception ex) {
 			throw new RuntimeException(ex.getMessage(), ex);
