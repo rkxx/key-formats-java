@@ -11,4 +11,5 @@ public class Curve {
     public static final String X25519 = "X25519";
     public static final String P_256 = "P-256";
     public static final String P_384 = "P-384";
+    public static final String P_521 = "P-521";
 }

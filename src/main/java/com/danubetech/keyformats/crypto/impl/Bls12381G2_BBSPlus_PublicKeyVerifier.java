@@ -1,15 +1,15 @@
 package com.danubetech.keyformats.crypto.impl;
 
 import bbs.signatures.Bbs;
+import bbs.signatures.KeyPair;
 import com.danubetech.keyformats.crypto.PublicKeyVerifier;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
-import org.bitcoinj.core.ECKey;
 
 import java.security.GeneralSecurityException;
 
-public class Bls12381G2_BBSPlus_PublicKeyVerifier extends PublicKeyVerifier<ECKey> {
+public class Bls12381G2_BBSPlus_PublicKeyVerifier extends PublicKeyVerifier<KeyPair> {
 
-    public Bls12381G2_BBSPlus_PublicKeyVerifier(ECKey publicKey) {
+    public Bls12381G2_BBSPlus_PublicKeyVerifier(KeyPair publicKey) {
 
         super(publicKey, JWSAlgorithm.BBSPlus);
     }
@@ -19,7 +19,7 @@ public class Bls12381G2_BBSPlus_PublicKeyVerifier extends PublicKeyVerifier<ECKe
 
         try {
 
-            return Bbs.blsVerify(this.getPublicKey().getPubKey(), signature, new byte[][]{signature});
+            return Bbs.blsVerify(this.getPublicKey().publicKey, signature, new byte[][]{signature});
         } catch (GeneralSecurityException ex) {
 
             throw ex;

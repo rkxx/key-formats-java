@@ -4,23 +4,22 @@ import com.danubetech.keyformats.crypto.PrivateKeySigner;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 
 import java.security.GeneralSecurityException;
-import java.security.KeyPair;
 import java.security.Signature;
-import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.ECPrivateKey;
 
-public class RSA_RS256_PrivateKeySigner extends PrivateKeySigner<KeyPair> {
+public class P_521_ES512_PrivateKeySigner extends PrivateKeySigner<ECPrivateKey> {
 
-    public RSA_RS256_PrivateKeySigner(KeyPair privateKey) {
+    public P_521_ES512_PrivateKeySigner(ECPrivateKey privateKey) {
 
-        super(privateKey, JWSAlgorithm.RS256);
+        super(privateKey, JWSAlgorithm.ES512);
     }
 
     @Override
     public byte[] sign(byte[] content) throws GeneralSecurityException {
 
-        Signature jcaSignature = Signature.getInstance("SHA256withRSA");
+        Signature jcaSignature = Signature.getInstance("SHA512withECDSA");
 
-        jcaSignature.initSign(this.getPrivateKey().getPrivate());
+        jcaSignature.initSign(this.getPrivateKey());
         jcaSignature.update(content);
 
         return jcaSignature.sign();
