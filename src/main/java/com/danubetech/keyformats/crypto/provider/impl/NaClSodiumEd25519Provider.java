@@ -4,7 +4,6 @@ import com.danubetech.keyformats.crypto.provider.Ed25519Provider;
 import com.danubetech.keyformats.crypto.provider.RandomProvider;
 import com.danubetech.keyformats.crypto.provider.SHA256Provider;
 import com.goterl.lazysodium.LazySodiumJava;
-import com.goterl.lazysodium.Sodium;
 import com.goterl.lazysodium.SodiumJava;
 import com.goterl.lazysodium.interfaces.Sign;
 
@@ -32,8 +31,6 @@ public class NaClSodiumEd25519Provider extends Ed25519Provider {
 		signNative.cryptoSignSeedKeypair(publicKey, privateKey, seed);
 		System.arraycopy(publicKey, 0, privateKey, Sign.ED25519_PUBLICKEYBYTES, Sign.ED25519_PUBLICKEYBYTES);
 	}
-
-	private Sodium SODIUM;
 
 	@Override
 	public void generateEC25519KeyPairFromSeed(byte[] publicKey, byte[] privateKey, byte[] seed) throws GeneralSecurityException {
