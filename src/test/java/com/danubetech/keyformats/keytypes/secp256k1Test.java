@@ -8,6 +8,7 @@ import org.bitcoinj.core.ECKey;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class secp256k1Test extends AbstractTest {
 
 	@Override
 	List<String> getAlgorithms() {
-		return Collections.singletonList(JWSAlgorithm.ES256K);
+		return Arrays.asList(JWSAlgorithm.ES256K, JWSAlgorithm.ES256KCC);
 	}
 
 	@Override
