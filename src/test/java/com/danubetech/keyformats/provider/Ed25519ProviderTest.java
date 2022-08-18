@@ -1,7 +1,10 @@
 package com.danubetech.keyformats.provider;
+
 import com.danubetech.keyformats.crypto.provider.Ed25519Provider;
 import com.danubetech.keyformats.crypto.provider.impl.NaClSodiumEd25519Provider;
 import com.danubetech.keyformats.crypto.provider.impl.TinkEd25519Provider;
+import com.goterl.lazysodium.SodiumJava;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.apache.commons.codec.binary.Hex;
 import org.junit.jupiter.api.Test;
 
@@ -12,8 +15,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class Ed25519ProviderTest {
 
+	static boolean isSodiumInstalled() {
+		try {
+			new SodiumJava();
+			return true;
+		} catch (UnsatisfiedLinkError ex) {
+			return false;
+		}
+	}
+
 	@Test
 	public void testNaClSodiumEd25519Provider() throws Exception {
+		if (! Ed25519ProviderTest.isSodiumInstalled()) {
+			System.out.println("libsodium is not installed. Skipping.");
+			return;
+		}
 		this.internalTest(new NaClSodiumEd25519Provider());
 	}
 

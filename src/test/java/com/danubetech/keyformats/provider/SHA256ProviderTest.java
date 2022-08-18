@@ -18,6 +18,10 @@ public class SHA256ProviderTest {
 
 	@Test
 	public void testNaClSodiumSHA256Provider() throws Exception {
+		if (! Ed25519ProviderTest.isSodiumInstalled()) {
+			System.out.println("libsodium is not installed. Skipping.");
+			return;
+		}
 		this.internalTest(new NaClSodiumSHA256Provider());
 	}
 

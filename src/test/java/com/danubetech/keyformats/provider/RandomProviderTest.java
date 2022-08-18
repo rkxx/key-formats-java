@@ -16,6 +16,10 @@ public class RandomProviderTest {
 
 	@Test
 	public void testNaClSodiumRandomProvider() throws Exception {
+		if (! Ed25519ProviderTest.isSodiumInstalled()) {
+			System.out.println("libsodium is not installed. Skipping.");
+			return;
+		}
 		this.internalTest(new NaClSodiumRandomProvider());
 	}
 

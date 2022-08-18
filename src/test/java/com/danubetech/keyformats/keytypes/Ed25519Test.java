@@ -59,11 +59,6 @@ public class Ed25519Test extends AbstractTest {
 		return JWK_to_PublicKey.JWK_to_Ed25519PublicKey(jwkPublic);
 	}
 
-	@BeforeAll
-	public static void beforeAll() {
-		Ed25519Provider.set(TinkEd25519Provider.get());
-	}
-
 	@Test
 	public void testPublicKey() throws Exception {
 		byte[] publicKey = JWK_to_PublicKey.JWK_to_Ed25519PublicKey(jwkPublic);
