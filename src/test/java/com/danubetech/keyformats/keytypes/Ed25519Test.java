@@ -1,9 +1,12 @@
 package com.danubetech.keyformats.keytypes;
 
 import com.danubetech.keyformats.*;
+import com.danubetech.keyformats.crypto.provider.Ed25519Provider;
+import com.danubetech.keyformats.crypto.provider.impl.TinkEd25519Provider;
 import com.danubetech.keyformats.jose.JWK;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import com.danubetech.keyformats.jose.KeyTypeName;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -54,6 +57,11 @@ public class Ed25519Test extends AbstractTest {
 	@Override
 	Object getPublicKey() {
 		return JWK_to_PublicKey.JWK_to_Ed25519PublicKey(jwkPublic);
+	}
+
+	@BeforeAll
+	public static void beforeAll() {
+		Ed25519Provider.set(TinkEd25519Provider.get());
 	}
 
 	@Test
