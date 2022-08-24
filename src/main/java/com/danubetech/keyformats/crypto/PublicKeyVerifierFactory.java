@@ -1,14 +1,25 @@
 package com.danubetech.keyformats.crypto;
 
+import com.danubetech.keyformats.JWK_to_PublicKey;
 import com.danubetech.keyformats.crypto.impl.*;
+import com.danubetech.keyformats.jose.JWK;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import com.danubetech.keyformats.jose.KeyTypeName;
+import com.danubetech.keyformats.keytypes.KeyTypeName_for_JWK;
 import org.bitcoinj.core.ECKey;
 
 import java.security.interfaces.ECPublicKey;
 import java.security.interfaces.RSAPublicKey;
 
 public class PublicKeyVerifierFactory {
+
+    public static PublicKeyVerifier<?> publicKeyVerifierForJWK(JWK jwk, String algorithm) {
+
+        return publicKeyVerifierForKey(
+                KeyTypeName_for_JWK.keyTypeName_for_JWK(jwk),
+                algorithm,
+                JWK_to_PublicKey.JWK_to_anyPublicKey(jwk));
+    }
 
     public static PublicKeyVerifier<?> publicKeyVerifierForKey(KeyTypeName keyTypeName, String algorithm, Object publicKey) {
 

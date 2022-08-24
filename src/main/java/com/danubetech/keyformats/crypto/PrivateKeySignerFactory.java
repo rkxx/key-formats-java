@@ -1,14 +1,25 @@
 package com.danubetech.keyformats.crypto;
 
+import com.danubetech.keyformats.JWK_to_PrivateKey;
 import com.danubetech.keyformats.crypto.impl.*;
+import com.danubetech.keyformats.jose.JWK;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import com.danubetech.keyformats.jose.KeyTypeName;
+import com.danubetech.keyformats.keytypes.KeyTypeName_for_JWK;
 import org.bitcoinj.core.ECKey;
 
 import java.security.KeyPair;
 import java.security.interfaces.ECPrivateKey;
 
 public class PrivateKeySignerFactory {
+
+    public static PrivateKeySigner<?> privateKeySignerForKey(JWK jwk, String algorithm) {
+
+        return privateKeySignerForKey(
+                KeyTypeName_for_JWK.keyTypeName_for_JWK(jwk),
+                algorithm,
+                JWK_to_PrivateKey.JWK_to_anyPrivateKey(jwk));
+    }
 
     public static PrivateKeySigner<?> privateKeySignerForKey(KeyTypeName keyTypeName, String algorithm, Object privateKey) {
 
