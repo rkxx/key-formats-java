@@ -3,10 +3,9 @@ package com.danubetech.keyformats.crypto.impl;
 import com.danubetech.keyformats.crypto.PublicKeyVerifier;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 import org.bitcoinj.core.ECKey;
-import org.bouncycastle.crypto.digests.SHA256Digest;
 import org.bouncycastle.crypto.params.ECPublicKeyParameters;
 import org.bouncycastle.crypto.signers.ECDSASigner;
-import org.bouncycastle.crypto.signers.HMacDSAKCalculator;
+import org.web3j.crypto.Hash;
 import org.web3j.crypto.Sign;
 
 import java.math.BigInteger;
@@ -31,7 +30,7 @@ public class secp256k1_ES256KCC_PublicKeyVerifier extends PublicKeyVerifier<ECKe
         System.arraycopy(signature, 32, s, 0, s.length);
         System.arraycopy(signature, 64, v, 0, v.length);
 
-        ECDSASigner signer = new ECDSASigner(new HMacDSAKCalculator(new SHA256Digest()));
+        ECDSASigner signer = new ECDSASigner();
 
         ECKey ec = ECKey.fromPublicOnly(this.getPublicKey());
 
@@ -41,9 +40,7 @@ public class secp256k1_ES256KCC_PublicKeyVerifier extends PublicKeyVerifier<ECKe
         Sign.SignatureData sig =   new Sign.SignatureData(v, r, s);
         Sign.signedMessageToKey(content, sig);
 
-        return signer.verifySignature(content,new BigInteger(1, r), new BigInteger(1, s));
-
-
+        return signer.verifySignature(Hash.sha3(content),new BigInteger(1, r), new BigInteger(1, s));
 
     }
 }
