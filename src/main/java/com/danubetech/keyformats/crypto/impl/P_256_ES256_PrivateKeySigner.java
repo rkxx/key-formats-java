@@ -2,7 +2,9 @@ package com.danubetech.keyformats.crypto.impl;
 
 import com.danubetech.keyformats.crypto.PrivateKeySigner;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
+import com.danubetech.keyformats.util.ASNUtil;
 
+import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.Signature;
 import java.security.interfaces.ECPrivateKey;
@@ -22,6 +24,10 @@ public class P_256_ES256_PrivateKeySigner extends PrivateKeySigner<ECPrivateKey>
         jcaSignature.initSign(this.getPrivateKey());
         jcaSignature.update(content);
 
-        return jcaSignature.sign();
+        try {
+            return ASNUtil.asn1ESSignatureToJwsSignature(jcaSignature.sign(), 64);
+        } catch (IOException ex) {
+            throw new GeneralSecurityException(ex.getMessage(), ex);
+        }
     }
 }
