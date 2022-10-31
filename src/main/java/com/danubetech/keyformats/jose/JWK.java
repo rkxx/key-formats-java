@@ -16,8 +16,13 @@ import java.util.Objects;
 public class JWK {
     private String kid;
     private String use;
+    private String key_ops;
+    private String alg;
     private String kty;
     private String crv;
+    private String x5u;
+    private String x5c;
+    private String x5t;
     private String x;
     private String y;
     private String d;
@@ -92,6 +97,22 @@ public class JWK {
         this.use = use;
     }
 
+    public String getKey_ops() {
+        return key_ops;
+    }
+
+    public void setKey_ops(String key_ops) {
+        this.key_ops = key_ops;
+    }
+
+    public String getAlg() {
+        return alg;
+    }
+
+    public void setAlg(String alg) {
+        this.alg = alg;
+    }
+
     public String getKty() {
         return kty;
     }
@@ -106,6 +127,30 @@ public class JWK {
 
     public void setCrv(String crv) {
         this.crv = crv;
+    }
+
+    public String getX5u() {
+        return x5u;
+    }
+
+    public void setX5u(String x5u) {
+        this.x5u = x5u;
+    }
+
+    public String getX5c() {
+        return x5c;
+    }
+
+    public void setX5c(String x5c) {
+        this.x5c = x5c;
+    }
+
+    public String getX5t() {
+        return x5t;
+    }
+
+    public void setX5t(String x5t) {
+        this.x5t = x5t;
     }
 
     public String getX() {
@@ -187,8 +232,13 @@ public class JWK {
         return "JWK{" +
                 "kid='" + kid + '\'' +
                 ", use='" + use + '\'' +
+                ", key_ops='" + key_ops + '\'' +
+                ", alg='" + alg + '\'' +
                 ", kty='" + kty + '\'' +
                 ", crv='" + crv + '\'' +
+                ", x5u='" + x5u + '\'' +
+                ", x5c='" + x5c + '\'' +
+                ", x5t='" + x5t + '\'' +
                 ", x='" + x + '\'' +
                 ", y='" + y + '\'' +
                 ", d='" + d + '\'' +
@@ -202,11 +252,11 @@ public class JWK {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         JWK jwk = (JWK) o;
-        return Objects.equals(kid, jwk.kid) && Objects.equals(use, jwk.use) && Objects.equals(kty, jwk.kty) && Objects.equals(crv, jwk.crv) && Objects.equals(x, jwk.x) && Objects.equals(y, jwk.y) && Objects.equals(d, jwk.d) && Objects.equals(n, jwk.n) && Objects.equals(e, jwk.e);
+        return Objects.equals(kid, jwk.kid) && Objects.equals(use, jwk.use) && Objects.equals(key_ops, jwk.key_ops) && Objects.equals(alg, jwk.alg) && Objects.equals(kty, jwk.kty) && Objects.equals(crv, jwk.crv) && Objects.equals(x5u, jwk.x5u) && Objects.equals(x5c, jwk.x5c) && Objects.equals(x5t, jwk.x5t) && Objects.equals(x, jwk.x) && Objects.equals(y, jwk.y) && Objects.equals(d, jwk.d) && Objects.equals(n, jwk.n) && Objects.equals(e, jwk.e);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(kid, use, kty, crv, x, y, d, n, e);
+        return Objects.hash(kid, use, key_ops, alg, kty, crv, x5u, x5c, x5t, x, y, d, n, e);
     }
 }
