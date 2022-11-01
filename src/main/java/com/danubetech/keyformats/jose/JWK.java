@@ -1,7 +1,9 @@
 package com.danubetech.keyformats.jose;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.binary.Base64;
@@ -10,24 +12,32 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class JWK {
-    private String kid;
-    private String use;
-    private String key_ops;
-    private String alg;
-    private String kty;
-    private String crv;
-    private String x5u;
-    private String x5c;
-    private String x5t;
-    private String x;
-    private String y;
-    private String d;
-    private String n;
-    private String e;
+    @JsonProperty("kid") private String kid;
+    @JsonProperty("use") private String use;
+    @JsonProperty("key_ops") private String key_ops;
+    @JsonProperty("alg") private String alg;
+    @JsonProperty("kty") private String kty;
+    @JsonProperty("crv") private String crv;
+    @JsonProperty("x5u") private String x5u;
+    @JsonProperty("x5c") private List<String> x5c;
+    @JsonProperty("x5t") private String x5t;
+    @JsonProperty("x5t#S256") private String x5t_S256;
+    @JsonProperty("x") private String x;
+    @JsonProperty("y") private String y;
+    @JsonProperty("d") private String d;
+    @JsonProperty("n") private String n;
+    @JsonProperty("e") private String e;
+    @JsonProperty("k") private String k;
+    @JsonProperty("p") private String p;
+    @JsonProperty("q") private String q;
+    @JsonProperty("dp") private String dp;
+    @JsonProperty("dq") private String dq;
+    @JsonProperty("qi") private String qi;
 
     public JWK() {
     }
@@ -137,11 +147,11 @@ public class JWK {
         this.x5u = x5u;
     }
 
-    public String getX5c() {
+    public List<String> getX5c() {
         return x5c;
     }
 
-    public void setX5c(String x5c) {
+    public void setX5c(List<String> x5c) {
         this.x5c = x5c;
     }
 
@@ -151,6 +161,14 @@ public class JWK {
 
     public void setX5t(String x5t) {
         this.x5t = x5t;
+    }
+
+    public String getX5t_S256() {
+        return x5t_S256;
+    }
+
+    public void setX5t_S256(String x5t_S256) {
+        this.x5t_S256 = x5t_S256;
     }
 
     public String getX() {
@@ -185,22 +203,18 @@ public class JWK {
         return d;
     }
 
-    public void setD(String d) {
-        this.d = d;
-    }
-
     @JsonIgnore
     public byte[] getDdecoded() {
         String d = this.getD();
         return d != null ? Base64.decodeBase64(d) : null;
     }
 
-    public String getN() {
-        return n;
+    public void setD(String d) {
+        this.d = d;
     }
 
-    public void setN(String n) {
-        this.n = n;
+    public String getN() {
+        return n;
     }
 
     @JsonIgnore
@@ -209,18 +223,106 @@ public class JWK {
         return n != null ? Base64.decodeBase64(n) : null;
     }
 
-    public String getE() {
-        return e;
+    public void setN(String n) {
+        this.n = n;
     }
 
-    public void setE(String e) {
-        this.e = e;
+    public String getE() {
+        return e;
     }
 
     @JsonIgnore
     public byte[] getEdecoded() {
         String e = this.getE();
         return e != null ? Base64.decodeBase64(e) : null;
+    }
+
+    public void setE(String e) {
+        this.e = e;
+    }
+
+    public String getK() {
+        return k;
+    }
+
+    @JsonIgnore
+    public byte[] getKdecoded() {
+        String k = this.getK();
+        return k != null ? Base64.decodeBase64(k) : null;
+    }
+
+    public void setK(String k) {
+        this.k = k;
+    }
+
+    public String getP() {
+        return p;
+    }
+
+    @JsonIgnore
+    public byte[] getPdecoded() {
+        String p = this.getP();
+        return p != null ? Base64.decodeBase64(p) : null;
+    }
+
+    public void setP(String p) {
+        this.p = p;
+    }
+
+    public String getQ() {
+        return q;
+    }
+
+    @JsonIgnore
+    public byte[] getQdecoded() {
+        String q = this.getQ();
+        return q != null ? Base64.decodeBase64(q) : null;
+    }
+
+    public void setQ(String q) {
+        this.q = q;
+    }
+
+    public String getDp() {
+        return dp;
+    }
+
+    @JsonIgnore
+    public byte[] getDpdecoded() {
+        String dp = this.getDp();
+        return dp != null ? Base64.decodeBase64(dp) : null;
+    }
+
+    public void setDp(String dp) {
+        this.dp = dp;
+    }
+
+    public String getDq() {
+        return dq;
+    }
+
+    @JsonIgnore
+    public byte[] getDqdecoded() {
+        String dq = this.getDq();
+        return dq != null ? Base64.decodeBase64(dq) : null;
+    }
+
+    public void setDq(String dq) {
+        this.dq = dq;
+    }
+
+    public String getQi() {
+        return qi;
+    }
+
+    @JsonIgnore
+    public byte[] getQidecoded() {
+        String qi = this.getQi();
+        return qi != null ? Base64.decodeBase64(qi) : null;
+    }
+
+    public void setQi(String qi) {
+        this.qi = qi;
     }
 
     /*
@@ -237,13 +339,20 @@ public class JWK {
                 ", kty='" + kty + '\'' +
                 ", crv='" + crv + '\'' +
                 ", x5u='" + x5u + '\'' +
-                ", x5c='" + x5c + '\'' +
+                ", x5c=" + x5c +
                 ", x5t='" + x5t + '\'' +
+                ", x5t_S256='" + x5t_S256 + '\'' +
                 ", x='" + x + '\'' +
                 ", y='" + y + '\'' +
                 ", d='" + d + '\'' +
                 ", n='" + n + '\'' +
                 ", e='" + e + '\'' +
+                ", k='" + k + '\'' +
+                ", p='" + p + '\'' +
+                ", q='" + q + '\'' +
+                ", dp='" + dp + '\'' +
+                ", dq='" + dq + '\'' +
+                ", qi='" + qi + '\'' +
                 '}';
     }
 
@@ -252,11 +361,11 @@ public class JWK {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         JWK jwk = (JWK) o;
-        return Objects.equals(kid, jwk.kid) && Objects.equals(use, jwk.use) && Objects.equals(key_ops, jwk.key_ops) && Objects.equals(alg, jwk.alg) && Objects.equals(kty, jwk.kty) && Objects.equals(crv, jwk.crv) && Objects.equals(x5u, jwk.x5u) && Objects.equals(x5c, jwk.x5c) && Objects.equals(x5t, jwk.x5t) && Objects.equals(x, jwk.x) && Objects.equals(y, jwk.y) && Objects.equals(d, jwk.d) && Objects.equals(n, jwk.n) && Objects.equals(e, jwk.e);
+        return Objects.equals(kid, jwk.kid) && Objects.equals(use, jwk.use) && Objects.equals(key_ops, jwk.key_ops) && Objects.equals(alg, jwk.alg) && Objects.equals(kty, jwk.kty) && Objects.equals(crv, jwk.crv) && Objects.equals(x5u, jwk.x5u) && Objects.equals(x5c, jwk.x5c) && Objects.equals(x5t, jwk.x5t) && Objects.equals(x5t_S256, jwk.x5t_S256) && Objects.equals(x, jwk.x) && Objects.equals(y, jwk.y) && Objects.equals(d, jwk.d) && Objects.equals(n, jwk.n) && Objects.equals(e, jwk.e) && Objects.equals(k, jwk.k) && Objects.equals(p, jwk.p) && Objects.equals(q, jwk.q) && Objects.equals(dp, jwk.dp) && Objects.equals(dq, jwk.dq) && Objects.equals(qi, jwk.qi);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(kid, use, key_ops, alg, kty, crv, x5u, x5c, x5t, x, y, d, n, e);
+        return Objects.hash(kid, use, key_ops, alg, kty, crv, x5u, x5c, x5t, x5t_S256, x, y, d, n, e, k, p, q, dp, dq, qi);
     }
 }
