@@ -10,16 +10,31 @@ import kotlin.test.assertTrue
 
 class Bls12381G2_BBSPlusTest {
     @Test
-    fun signAndVerifyContent() {
+    fun signAndVerifySingleMessage() {
         val content = Random.nextBytes(32)
         val keyPair = Bbs.generateBls12381G2Key(Random.nextBytes(32))
         val signature = Bls12381G2_BBSPlus_PrivateKeySigner(keyPair).run {
             sign(content)
         }
         assertEquals(signature.size, 112)
-        val verifyResult = Bls12381G2_BBSPlus_PublicKeyVerifier(keyPair).run {
+        val verifyResult = Bls12381G2_BBSPlus_PublicKeyVerifier(keyPair.publicKey).run {
             verify(content, signature)
         }
         assertTrue(verifyResult)
     }
+
+    @Test
+    fun signAndVerifyListOfMessages() {
+        val content = listOf(Random.nextBytes(32), Random.nextBytes(32), Random.nextBytes(32))
+        val keyPair = Bbs.generateBls12381G2Key(Random.nextBytes(32))
+        val signature = Bls12381G2_BBSPlus_PrivateKeySigner(keyPair).run {
+            sign(content)
+        }
+        assertEquals(signature.size, 112)
+        val verifyResult = Bls12381G2_BBSPlus_PublicKeyVerifier(keyPair.publicKey).run {
+            verify(content, signature)
+        }
+        assertTrue(verifyResult)
+    }
+
 }
