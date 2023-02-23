@@ -26,6 +26,13 @@ public class BBSPlus_PrivateKeySigner extends PrivateKeySigner<byte[]> {
         return sign(List.of(content));
     }
 
+    public final byte[] sign(List<byte[]> content, String algorithm) throws GeneralSecurityException {
+
+        if (! algorithm.equals(getAlgorithm())) throw new GeneralSecurityException("Unexpected algorithm " + algorithm + " is different from " + getAlgorithm());
+
+        return this.sign(content);
+    }
+
     public byte[] sign(List<byte[]> content) throws GeneralSecurityException {
         try {
             return Bbs.blsSign(getPrivateKey(), publicKey, content.toArray(new byte[content.size()][]));

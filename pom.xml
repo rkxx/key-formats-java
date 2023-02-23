@@ -240,7 +240,7 @@
 		<dependency>
 			<groupId>com.github.mattrglobal</groupId>
 			<artifactId>bbs.signatures</artifactId>
-			<version>1.5-21-07-2021</version>
+			<version>1.6-SNAPSHOT</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>

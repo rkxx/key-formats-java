@@ -1,7 +1,6 @@
 package com.danubetech.keyformats.crypto.impl;
 
 import bbs.signatures.Bbs;
-import bbs.signatures.KeyPair;
 import com.danubetech.keyformats.crypto.PublicKeyVerifier;
 import com.danubetech.keyformats.jose.JWSAlgorithm;
 
@@ -17,6 +16,13 @@ public class BBSPlus_PublicKeyVerifier extends PublicKeyVerifier<byte[]> {
     @Override
     public boolean verify(byte[] content, byte[] signature) throws GeneralSecurityException {
         return verify(List.of(content), signature);
+    }
+
+    public final boolean verify(List<byte[]> content, byte[] signature, String algorithm) throws GeneralSecurityException {
+        if (!algorithm.equals(getAlgorithm())) {
+            throw new GeneralSecurityException("Unexpected algorithm " + algorithm + " is different from " + getAlgorithm());
+        }
+        return this.verify(content, signature);
     }
 
     public boolean verify(List<byte[]> content, byte[] signature) throws GeneralSecurityException {
