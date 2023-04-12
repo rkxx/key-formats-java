@@ -12,14 +12,14 @@ public abstract class ProofVerifier {
 		this.algorithm = algorithm;
 	}
 
-	public final boolean verify(byte[] proof, List<byte[]> revealedMessages, String algorithm) throws GeneralSecurityException {
+	public final boolean verify(byte[] proof, byte[] nonce, List<byte[]> revealedMessages, String algorithm) throws GeneralSecurityException {
 
 		if (! algorithm.equals(this.algorithm)) throw new GeneralSecurityException("Unexpected algorithm " + algorithm + " is different from " + this.algorithm);
 
-		return this.verify(proof, revealedMessages);
+		return this.verify(proof, nonce, revealedMessages);
 	}
 
-	protected abstract boolean verify(byte[] proof, List<byte[]> revealedMessages) throws GeneralSecurityException;
+	protected abstract boolean verify(byte[] proof, byte[] nonce, List<byte[]> revealedMessages) throws GeneralSecurityException;
 
 	public String getAlgorithm() {
 

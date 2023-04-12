@@ -39,7 +39,7 @@ class Bls12381G2_BBSPlusTest {
 
     @Test
     fun signAndVerifyLongListOfMessages() {
-        val content = List(200) { Random.nextBytes(200) }
+        val content = List(200) { Random.nextBytes(900) }
         val keyPair = Bbs.generateBls12381G2Key(Random.nextBytes(32))
         val signature = Bls12381G2_BBSPlus_PrivateKeySigner(keyPair).run {
             sign(content)
